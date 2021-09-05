@@ -18,6 +18,8 @@ import TrackPlayer, {
   usePlaybackState,
   useProgress,
   useTrackPlayerEvents,
+  STATE_PLAYING,
+  STATE_PAUSED,
 } from 'react-native-track-player';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -26,27 +28,35 @@ import tracksData from '../Components/AudioPlayer/resources/tracks';
 import playlistData from '../Components/AudioPlayer/data/playlist.json';
 
 const setup = async () => {
-  await TrackPlayer.setupPlayer({});
-  await TrackPlayer.updateOptions({
-    stopWithApp: true,
-    capabilities: [
-      Capability.Play,
-      Capability.Pause,
-      Capability.SkipToNext,
-      Capability.SkipToPrevious,
-      Capability.Stop,
-    ],
-    // Capabilities that will show up when the notification is in the compact form on Android
-    compactCapabilities: [Capability.Play, Capability.Pause],
+  try {
+    await TrackPlayer.setupPlayer({});
 
-    // Icons for the notification on Android (if you don't like the default ones)
-    /* playIcon: require('./play-icon.png'),
+    await TrackPlayer.updateOptions({
+      stopWithApp: true, // false=> music continues in background even when app is closed
+      capabilities: [
+        // Media controls capabilities
+        Capability.Play,
+        Capability.Pause,
+        Capability.Stop,
+        Capability.SeekTo,
+        Capability.SkipToNext,
+        Capability.SkipToPrevious,
+      ],
+      // Capabilities that will show up when the notification is in the compact form on Android
+      compactCapabilities: [Capability.Play, Capability.Pause, Capability.Stop],
+
+      // Icons for the notification on Android (if you don't like the default ones)
+      /* playIcon: require('./play-icon.png'),
     pauseIcon: require('./pause-icon.png'),
     stopIcon: require('./stop-icon.png'),
     previousIcon: require('./previous-icon.png'),
     nextIcon: require('./next-icon.png'),
     icon: require('./notification-icon.png') */
-  });
+    });
+  } catch (e) {
+    console.log(e);
+    // to-do handle error
+  }
 
   // await TrackPlayer.add(localTrack);
   // console.log('\n\n\ntracksData=========================\n');
