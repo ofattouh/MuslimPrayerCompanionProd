@@ -19,7 +19,7 @@ import TrackPlayer, {
   useProgress,
   useTrackPlayerEvents,
 } from 'react-native-track-player';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 // import localTrack from '../Components/AudioPlayer/resources/sounds/pure.m4a';
 import tracksData from '../Components/AudioPlayer/resources/tracks';
@@ -36,7 +36,9 @@ const setup = async () => {
       Capability.SkipToPrevious,
       Capability.Stop,
     ],
+    // Capabilities that will show up when the notification is in the compact form on Android
     compactCapabilities: [Capability.Play, Capability.Pause],
+
     // Icons for the notification on Android (if you don't like the default ones)
     /* playIcon: require('./play-icon.png'),
     pauseIcon: require('./pause-icon.png'),
@@ -47,54 +49,40 @@ const setup = async () => {
   });
 
   // await TrackPlayer.add(localTrack);
-  // await TrackPlayer.add(playlistData);
-  // await TrackPlayer.add(tracksData);
-
-  /* await TrackPlayer.add([
-    {
-      id: 'trackId',
-      url: require('../Uploads/braveheart.mp3'),
-      title: 'Track Title',
-      artist: 'Track Artist',
-      artwork: require('../Uploads/salah-times.png'),
-    },
-    {
-      id: 'trackId2',
-      url: require('../Uploads/braveheart.mp3'),
-      title: 'Track Title 2',
-      artist: 'Track Artist 2',
-      artwork: require('../Uploads/salah-times.png'),
-    },
-  ]); */
-
-  /* await TrackPlayer.add({
-    url: localTrack,
-    title: 'Pure (Demo)',
-    artist: 'David Chavez',
-    artwork: 'https://i.scdn.co/image/e5c7b168be89098eb686e02152aaee9d3a24e5b6',
-    duration: 28,
-  }); */
-
-  // console.log('\n\n\nplaylistData=========================\n');
-  // console.log(playlistData);
-
   // console.log('\n\n\ntracksData=========================\n');
   // console.log(tracksData);
-
-  // console.log('\n\n\nconcat=========================\n');
   // console.log(playlistData.concat(tracksData));
 
   await TrackPlayer.add(playlistData.concat(tracksData));
-  TrackPlayer.setRepeatMode(RepeatMode.Queue);
+  // TrackPlayer.setRepeatMode(RepeatMode.Queue);
 };
 
 const togglePlayback = async (playbackState: State) => {
   const currentTrack = await TrackPlayer.getCurrentTrack();
+
+  // Debug
+  const state = await TrackPlayer.getState();
+  console.log('\nstate: ' + state);
+  console.log('\nplaybackState: ' + playbackState);
+  /* if (state === State.Playing) {
+    console.log('\n\nThe player is playing.......');
+  } */
+
+  // console.log('\n============State=====');
+  // console.log(State);
+  // LOG  {"0": "None", "1": "Stopped", "2": "Paused", "3": "Playing", "6": "Buffering", "8": "Connecting", "Buffering": 6, "Connecting": 8, "None": 0, "Paused": 2, "Playing": 3, "Ready": 2, "Stopped": 1}
+  // console.log('\ncurrentTrack: ' + currentTrack);
+  // console.log('\nState.Paused: ' + State.Paused);
+
   if (currentTrack == null) {
-    console.log('currentTrack is empty!');
+    console.log('No track to play!');
     // TODO: Perhaps present an error or restart the playlist?
   } else {
     if (playbackState === State.Paused) {
+      console.log('\n\nState.Paused: The player is playing.......');
+      await TrackPlayer.play();
+    } else if (playbackState === State.Connecting) {
+      console.log('Player is buffering ...(in pause state)');
       await TrackPlayer.play();
     } else {
       await TrackPlayer.pause();
@@ -144,9 +132,11 @@ function AudioPlayerScreen({navigation}) {
   return (
     <SafeAreaView style={styles.screenContainer}>
       <StatusBar barStyle={'light-content'} />
+
       <View style={styles.contentContainer}>
         <View style={styles.topBarContainer}>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => TrackPlayer.setRepeatMode(RepeatMode.Queue)}>
             <Text style={styles.queueButton}>
               <Icon name="repeat" size={25} color="#fff" />
             </Text>
@@ -190,9 +180,9 @@ function AudioPlayerScreen({navigation}) {
         <TouchableOpacity onPress={() => togglePlayback(playbackState)}>
           <Text style={styles.primaryActionButton}>
             {playbackState === State.Playing ? (
-              <Icon name="pause" size={25} color="#fff" />
+              <Icon name="pause" size={30} color="#fff" />
             ) : (
-              <Icon name="play" size={25} color="#fff" />
+              <Icon name="play" size={30} color="#fff" />
             )}
           </Text>
         </TouchableOpacity>
@@ -230,7 +220,7 @@ const styles = StyleSheet.create({
     color: '#FFD479',
   },
   artwork: {
-    width: 240,
+    width: 280,
     height: 240,
     marginTop: 30,
     backgroundColor: 'grey',
@@ -283,5 +273,5 @@ export default AudioPlayerScreen;
 // https://react-native-track-player.js.org/getting-started/
 // https://github.com/DoubleSymmetry/react-native-track-player
 // https://react-native-track-player.js.org/documentation/
-// https://oblador.github.io/react-native-vector-icons/
 // https://github.com/callstack/react-native-slider
+// https://oblador.github.io/react-native-vector-icons/

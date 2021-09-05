@@ -17,6 +17,7 @@ import MedinaVideoScreen from '../Screens/MedinaLive';
 import MakkahLiveScreen from '../Screens/MakkahLive';
 import MosquesMapScreen from '../Screens/MosquesMap';
 import AudioPlayerScreen from '../Screens/AudioPlayer';
+// import TestAudioPlayerScreen from '../Screens/TestAudioPlayer';
 
 function CustomDrawerContent(props) {
   return (

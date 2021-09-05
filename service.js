@@ -10,6 +10,8 @@
 import TrackPlayer from 'react-native-track-player';
 
 module.exports = async function () {
+  // media controls available in the lockscreen/notification
+
   TrackPlayer.addEventListener('remote-play', () => {
     TrackPlayer.play();
   });
@@ -18,15 +20,15 @@ module.exports = async function () {
     TrackPlayer.pause();
   });
 
+  TrackPlayer.addEventListener('remote-stop', () => {
+    TrackPlayer.destroy();
+  });
+
   TrackPlayer.addEventListener('remote-next', () => {
     TrackPlayer.skipToNext();
   });
 
   TrackPlayer.addEventListener('remote-previous', () => {
     TrackPlayer.skipToPrevious();
-  });
-
-  TrackPlayer.addEventListener('remote-stop', () => {
-    TrackPlayer.destroy();
   });
 };
