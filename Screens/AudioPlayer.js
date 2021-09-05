@@ -18,8 +18,6 @@ import TrackPlayer, {
   usePlaybackState,
   useProgress,
   useTrackPlayerEvents,
-  STATE_PLAYING,
-  STATE_PAUSED,
 } from 'react-native-track-player';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -47,11 +45,11 @@ const setup = async () => {
 
       // Icons for the notification on Android (if you don't like the default ones)
       /* playIcon: require('./play-icon.png'),
-    pauseIcon: require('./pause-icon.png'),
-    stopIcon: require('./stop-icon.png'),
-    previousIcon: require('./previous-icon.png'),
-    nextIcon: require('./next-icon.png'),
-    icon: require('./notification-icon.png') */
+        pauseIcon: require('./pause-icon.png'),
+        stopIcon: require('./stop-icon.png'),
+        previousIcon: require('./previous-icon.png'),
+        nextIcon: require('./next-icon.png'),
+        icon: require('./notification-icon.png') */
     });
   } catch (e) {
     console.log(e);
@@ -61,7 +59,6 @@ const setup = async () => {
   // await TrackPlayer.add(localTrack);
   // console.log('\n\n\ntracksData=========================\n');
   // console.log(tracksData);
-  // console.log(playlistData.concat(tracksData));
 
   await TrackPlayer.add(playlistData.concat(tracksData));
   // TrackPlayer.setRepeatMode(RepeatMode.Queue);
