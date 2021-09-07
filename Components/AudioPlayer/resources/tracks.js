@@ -4,8 +4,8 @@ const tracksData = [
     title: 'Piano Sonata No. 1 in F minor',
     artist: 'Ludwig van Beethoven',
     id: '1', // optional
-    artwork: 'https://picsum.photos/500/500.jpg?random=1000',
-    // artwork: require('./artworks/lights.jpg'), // optional
+    artwork: 'https://picsum.photos/500/500.jpg?random=1000', // optional
+    // artwork: require('./artworks/lights.jpg'),
   },
   {
     url: require('./sounds/symphony.mp3'),

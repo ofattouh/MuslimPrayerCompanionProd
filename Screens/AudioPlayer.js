@@ -8,7 +8,6 @@ import {
   Text,
   TouchableOpacity,
   View,
-  // TouchableWithoutFeedback,
 } from 'react-native';
 import TrackPlayer, {
   Capability,
@@ -18,21 +17,19 @@ import TrackPlayer, {
   usePlaybackState,
   useProgress,
   useTrackPlayerEvents,
-  // TrackPlayerEvents,
-  // STATE_PLAYING,
 } from 'react-native-track-player';
 
 import Slider from '@react-native-community/slider';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 // import localTrack from '../Components/AudioPlayer/resources/sounds/pure.m4a';
-import tracksData from '../Components/AudioPlayer/resources/tracks';
-import playlistData from '../Components/AudioPlayer/data/playlist.json';
+import tracksData from '../Components/AudioPlayer/resources/tracks'; // saved local
+import playlistData from '../Components/AudioPlayer/data/playlist.json'; // streaming
 
 const setup = async () => {
   try {
     await TrackPlayer.updateOptions({
-      stopWithApp: true, // false=> music continues in background even when app is closed
+      stopWithApp: true, // (Android) false=> music continues in background even when app is closed
       capabilities: [
         // Media controls capabilities
         Capability.Play,
@@ -42,7 +39,7 @@ const setup = async () => {
         Capability.SkipToPrevious,
         Capability.SeekTo,
       ],
-      // Capabilities that will show up when the notification is in the compact form on Android
+      // (Android only) Capabilities that will show up when notification in compact form
       compactCapabilities: [Capability.Play, Capability.Pause, Capability.Stop],
 
       // (Android only) Icons for the notification (instead of default ones)
@@ -60,7 +57,6 @@ const setup = async () => {
   }
 
   // await TrackPlayer.add(localTrack);
-  // console.log('\n\n\ntracksData=========================\n');
   // console.log(tracksData);
 
   await TrackPlayer.add(playlistData.concat(tracksData));
@@ -85,17 +81,16 @@ const togglePlayback = async (playbackState: State) => {
       playbackState === State.Paused ||
       playbackState === State.Connecting
     ) {
-      console.log('\nThe player is playing.......');
       await TrackPlayer.play();
     } else {
-      console.log(State);
+      console.log('\nThe player is paused...');
+      // console.log(State);
       await TrackPlayer.pause();
     }
   }
 };
 
 function AudioPlayerScreen({navigation}) {
-  // const [playerState, setPlayerState] = useState(null);
   const playbackState = usePlaybackState();
   const progress = useProgress();
 
@@ -109,11 +104,11 @@ function AudioPlayerScreen({navigation}) {
       Event.PlaybackTrackChanged,
       Event.RemotePlay,
       Event.RemotePause,
+      Event.RemoteStop,
       Event.PlaybackState,
       Event.PlaybackError,
     ],
     async event => {
-      console.log('\n======event========');
       console.log(event);
 
       if (
@@ -131,14 +126,14 @@ function AudioPlayerScreen({navigation}) {
       } else if (event.type === Event.RemotePlay) {
         TrackPlayer.play();
       } else if (event.type === Event.PlaybackQueueEnded) {
-        console.log('PlaybackQueueEnded fired.');
-        /* } else if (event.type === Event.PlaybackState) {
-        setPlayerState(event.state);
-        console.log('PlaybackState: ' + event); */
+        console.log('PlaybackQueueEnded.');
+      } else if (event.type === Event.PlaybackState) {
+        console.log('PlaybackState.');
+      } else if (event.type === Event.RemoteStop) {
+        console.log('Player stopped.');
       } else if (event.type === Event.PlaybackError) {
-        // console.warn('An error occured while playing the current track.');
-        console.log(event.code + ': ' + event.message);
-        Alert.alert('Error: ' + event.message + ', Try back later!');
+        console.warn(event.code + ': ' + event.message);
+        Alert.alert('Try back later! ' + event.code + ':' + event.message);
       }
     },
   );
@@ -147,17 +142,16 @@ function AudioPlayerScreen({navigation}) {
     setup();
   }, []);
 
-  // const isPlaying = playerState === STATE_PLAYING;
-
   return (
     <SafeAreaView style={styles.screenContainer}>
       <StatusBar barStyle={'light-content'} />
 
       <View style={styles.contentContainer}>
-        {/* <View style={styles.topBarContainer}>
+        {/*
+          <View style={styles.topBarContainer}>
           <TouchableOpacity
-            onPress={() => TrackPlayer.setRepeatMode(RepeatMode.Queue)}>
-            <Text style={styles.queueButton}>
+            onPress={() => TrackPlayer.setRepeatMode(RepeatMode.Track)}>
+            <Text style={styles.repeatModeButton}>
               <Icon name="repeat" size={25} color="#fff" />
             </Text>
           </TouchableOpacity>
@@ -185,6 +179,7 @@ function AudioPlayerScreen({navigation}) {
           <Text style={styles.progressLabelText}>
             {new Date(progress.position * 1000).toISOString().substr(14, 5)}
           </Text>
+
           <Text style={styles.progressLabelText}>
             {new Date((progress.duration - progress.position) * 1000)
               .toISOString()
@@ -219,9 +214,6 @@ function AudioPlayerScreen({navigation}) {
 
       <View>
         <Text style={styles.playingStats}>
-          {/*
-          Audio Player is {isPlaying ? 'playing' : 'not playing'} {'\n'}
-        */}
           Track progress: {'\n'} {progress.position} seconds out of{' '}
           {new Date((progress.duration - progress.position) * 1000)
             .toISOString()
@@ -296,16 +288,17 @@ const styles = StyleSheet.create({
   },
   playingStats: {
     fontSize: 14,
-    marginBottom: 100,
+    marginBottom: '10%',
     color: '#FFD479',
   },
-  /* topBarContainer: {
+  /*
+  topBarContainer: {
     width: '100%',
     flexDirection: 'row',
     paddingHorizontal: 20,
     justifyContent: 'flex-end',
   },
-  queueButton: {
+  repeatModeButton: {
     marginTop: 10,
     fontSize: 18,
     fontWeight: 'bold',
