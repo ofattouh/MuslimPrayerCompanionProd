@@ -1,15 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import {
+  Alert,
   Image,
   SafeAreaView,
   StatusBar,
   StyleSheet,
   Text,
-  // TouchableWithoutFeedback,
   TouchableOpacity,
   View,
+  // TouchableWithoutFeedback,
 } from 'react-native';
-import Slider from '@react-native-community/slider';
 import TrackPlayer, {
   Capability,
   Event,
@@ -18,7 +18,11 @@ import TrackPlayer, {
   usePlaybackState,
   useProgress,
   useTrackPlayerEvents,
+  // TrackPlayerEvents,
+  // STATE_PLAYING,
 } from 'react-native-track-player';
+
+import Slider from '@react-native-community/slider';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 // import localTrack from '../Components/AudioPlayer/resources/sounds/pure.m4a';
@@ -27,8 +31,6 @@ import playlistData from '../Components/AudioPlayer/data/playlist.json';
 
 const setup = async () => {
   try {
-    await TrackPlayer.setupPlayer({});
-
     await TrackPlayer.updateOptions({
       stopWithApp: true, // false=> music continues in background even when app is closed
       capabilities: [
@@ -36,14 +38,14 @@ const setup = async () => {
         Capability.Play,
         Capability.Pause,
         Capability.Stop,
-        Capability.SeekTo,
         Capability.SkipToNext,
         Capability.SkipToPrevious,
+        Capability.SeekTo,
       ],
       // Capabilities that will show up when the notification is in the compact form on Android
       compactCapabilities: [Capability.Play, Capability.Pause, Capability.Stop],
 
-      // Icons for the notification on Android (if you don't like the default ones)
+      // (Android only) Icons for the notification (instead of default ones)
       /* playIcon: require('./play-icon.png'),
         pauseIcon: require('./pause-icon.png'),
         stopIcon: require('./stop-icon.png'),
@@ -51,9 +53,10 @@ const setup = async () => {
         nextIcon: require('./next-icon.png'),
         icon: require('./notification-icon.png') */
     });
+
+    await TrackPlayer.setupPlayer({waitForBuffer: true});
   } catch (e) {
     console.log(e);
-    // to-do handle error
   }
 
   // await TrackPlayer.add(localTrack);
@@ -61,7 +64,7 @@ const setup = async () => {
   // console.log(tracksData);
 
   await TrackPlayer.add(playlistData.concat(tracksData));
-  // TrackPlayer.setRepeatMode(RepeatMode.Queue);
+  TrackPlayer.setRepeatMode(RepeatMode.Queue); // Repeats the whole queue after last song in track
 };
 
 const togglePlayback = async (playbackState: State) => {
@@ -69,35 +72,30 @@ const togglePlayback = async (playbackState: State) => {
 
   // Debug
   const state = await TrackPlayer.getState();
-  console.log('\nstate: ' + state);
-  console.log('\nplaybackState: ' + playbackState);
-  /* if (state === State.Playing) {
-    console.log('\n\nThe player is playing.......');
-  } */
+  console.log(state + ',' + playbackState);
 
-  // console.log('\n============State=====');
-  // console.log(State);
   // LOG  {"0": "None", "1": "Stopped", "2": "Paused", "3": "Playing", "6": "Buffering", "8": "Connecting", "Buffering": 6, "Connecting": 8, "None": 0, "Paused": 2, "Playing": 3, "Ready": 2, "Stopped": 1}
-  // console.log('\ncurrentTrack: ' + currentTrack);
-  // console.log('\nState.Paused: ' + State.Paused);
 
   if (currentTrack == null) {
     console.log('No track to play!');
     // TODO: Perhaps present an error or restart the playlist?
   } else {
-    if (playbackState === State.Paused) {
-      console.log('\n\nState.Paused: The player is playing.......');
-      await TrackPlayer.play();
-    } else if (playbackState === State.Connecting) {
-      console.log('Player is buffering ...(in pause state)');
+    if (
+      playbackState === State.Ready ||
+      playbackState === State.Paused ||
+      playbackState === State.Connecting
+    ) {
+      console.log('\nThe player is playing.......');
       await TrackPlayer.play();
     } else {
+      console.log(State);
       await TrackPlayer.pause();
     }
   }
 };
 
 function AudioPlayerScreen({navigation}) {
+  // const [playerState, setPlayerState] = useState(null);
   const playbackState = usePlaybackState();
   const progress = useProgress();
 
@@ -111,14 +109,20 @@ function AudioPlayerScreen({navigation}) {
       Event.PlaybackTrackChanged,
       Event.RemotePlay,
       Event.RemotePause,
+      Event.PlaybackState,
+      Event.PlaybackError,
     ],
     async event => {
+      console.log('\n======event========');
+      console.log(event);
+
       if (
         event.type === Event.PlaybackTrackChanged &&
         event.nextTrack !== undefined
       ) {
         const track = await TrackPlayer.getTrack(event.nextTrack);
         const {title, artist, artwork} = track || {};
+
         setTrackTitle(title);
         setTrackArtist(artist);
         setTrackArtwork(artwork);
@@ -127,7 +131,14 @@ function AudioPlayerScreen({navigation}) {
       } else if (event.type === Event.RemotePlay) {
         TrackPlayer.play();
       } else if (event.type === Event.PlaybackQueueEnded) {
-        console.log('Event.PlaybackQueueEnded fired.');
+        console.log('PlaybackQueueEnded fired.');
+        /* } else if (event.type === Event.PlaybackState) {
+        setPlayerState(event.state);
+        console.log('PlaybackState: ' + event); */
+      } else if (event.type === Event.PlaybackError) {
+        // console.warn('An error occured while playing the current track.');
+        console.log(event.code + ': ' + event.message);
+        Alert.alert('Error: ' + event.message + ', Try back later!');
       }
     },
   );
@@ -136,12 +147,14 @@ function AudioPlayerScreen({navigation}) {
     setup();
   }, []);
 
+  // const isPlaying = playerState === STATE_PLAYING;
+
   return (
     <SafeAreaView style={styles.screenContainer}>
       <StatusBar barStyle={'light-content'} />
 
       <View style={styles.contentContainer}>
-        <View style={styles.topBarContainer}>
+        {/* <View style={styles.topBarContainer}>
           <TouchableOpacity
             onPress={() => TrackPlayer.setRepeatMode(RepeatMode.Queue)}>
             <Text style={styles.queueButton}>
@@ -149,6 +162,7 @@ function AudioPlayerScreen({navigation}) {
             </Text>
           </TouchableOpacity>
         </View>
+        */}
 
         <Image style={styles.artwork} source={{uri: `${trackArtwork}`}} />
         <Text style={styles.titleText}>{trackTitle}</Text>
@@ -166,6 +180,7 @@ function AudioPlayerScreen({navigation}) {
             await TrackPlayer.seekTo(value);
           }}
         />
+
         <View style={styles.progressLabelContainer}>
           <Text style={styles.progressLabelText}>
             {new Date(progress.position * 1000).toISOString().substr(14, 5)}
@@ -177,6 +192,7 @@ function AudioPlayerScreen({navigation}) {
           </Text>
         </View>
       </View>
+
       <View style={styles.actionRowContainer}>
         <TouchableOpacity onPress={() => TrackPlayer.skipToPrevious()}>
           <Text style={styles.secondaryActionButton}>
@@ -200,6 +216,23 @@ function AudioPlayerScreen({navigation}) {
           </Text>
         </TouchableOpacity>
       </View>
+
+      <View>
+        <Text style={styles.playingStats}>
+          {/*
+          Audio Player is {isPlaying ? 'playing' : 'not playing'} {'\n'}
+        */}
+          Track progress: {'\n'} {progress.position} seconds out of{' '}
+          {new Date((progress.duration - progress.position) * 1000)
+            .toISOString()
+            .substr(14, 5)}
+          {'\n\n'}
+          Buffered progress: {'\n'} {progress.buffered} seconds buffered out of{' '}
+          {new Date((progress.duration - progress.position) * 1000)
+            .toISOString()
+            .substr(14, 5)}
+        </Text>
+      </View>
     </SafeAreaView>
   );
 }
@@ -214,22 +247,10 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
   },
-  topBarContainer: {
-    width: '100%',
-    flexDirection: 'row',
-    paddingHorizontal: 20,
-    justifyContent: 'flex-end',
-  },
-  queueButton: {
-    marginTop: 10,
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#FFD479',
-  },
   artwork: {
-    width: 280,
-    height: 240,
-    marginTop: 30,
+    width: 400,
+    height: 260,
+    marginTop: 5,
     backgroundColor: 'grey',
   },
   titleText: {
@@ -273,6 +294,24 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#FFD479',
   },
+  playingStats: {
+    fontSize: 14,
+    marginBottom: 100,
+    color: '#FFD479',
+  },
+  /* topBarContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    paddingHorizontal: 20,
+    justifyContent: 'flex-end',
+  },
+  queueButton: {
+    marginTop: 10,
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#FFD479',
+  },
+  */
 });
 
 export default AudioPlayerScreen;

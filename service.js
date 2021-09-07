@@ -31,4 +31,8 @@ module.exports = async function () {
   TrackPlayer.addEventListener('remote-previous', () => {
     TrackPlayer.skipToPrevious();
   });
+
+  TrackPlayer.addEventListener('remote-seek', () => {
+    TrackPlayer.SeekTo(5); // seek to seconds
+  });
 };
