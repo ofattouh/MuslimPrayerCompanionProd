@@ -132,7 +132,7 @@ function AudioPlayerScreen({navigation}) {
       } else if (event.type === Event.RemoteStop) {
         console.log('Player stopped.');
       } else if (event.type === Event.PlaybackError) {
-        console.warn(event.code + ': ' + event.message);
+        // console.warn(event.code + ': ' + event.message);
         Alert.alert('Try back later! ' + event.code + ':' + event.message);
       }
     },
