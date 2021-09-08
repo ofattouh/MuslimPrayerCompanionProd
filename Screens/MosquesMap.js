@@ -1,4 +1,5 @@
 import React from 'react';
+import {Alert} from 'react-native';
 import {WebView} from 'react-native-webview';
 
 // Components
@@ -7,10 +8,10 @@ import Loading from './Loading';
 function MosquesMapScreen() {
   return (
     <WebView
-      source={{uri: 'http://radio.garden/listen/al-quran-al-karem/GQxvGBNK'}}
+      source={{uri: 'https://www.islamicity.org/PrayerTimes/'}}
       startInLoadingState={true}
       renderLoading={() => <Loading />}
-      renderError={errorName => alert('Error: ' + errorName)}
+      renderError={errorName => Alert.alert('Error: ' + errorName)}
       allowsFullscreenVideo={true}
     />
   );

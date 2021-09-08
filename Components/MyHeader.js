@@ -5,19 +5,19 @@ function MyHeader() {
   return (
     <View style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor="#ADD8E6" />
-      <Text style={styles.paragraph}>Muslim Companion Prod</Text>
+      <Text style={styles.paragraph}>رفيق المسلم</Text>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    height: 70,
+    height: 75,
   },
   paragraph: {
-    padding: 20,
-    fontSize: 20,
-    fontWeight: 'bold',
+    marginLeft: '30%',
+    marginTop: 23,
+    fontSize: 22,
     color: '#fff',
   },
 });

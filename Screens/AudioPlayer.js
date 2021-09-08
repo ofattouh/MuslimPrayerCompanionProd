@@ -249,7 +249,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '600',
     color: 'white',
-    marginTop: 30,
+    marginTop: 35,
   },
   artistText: {
     fontSize: 16,
@@ -314,3 +314,8 @@ export default AudioPlayerScreen;
 // https://react-native-track-player.js.org/documentation/
 // https://github.com/callstack/react-native-slider
 // https://oblador.github.io/react-native-vector-icons/
+
+// Audio Streaming API:
+// http://www.liveradiu.com/p/radio-stations.html
+// https://www.islamicity.org/channels/online-radio/
+// http://www.arabic-keyboard.org/
