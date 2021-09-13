@@ -17,7 +17,8 @@ import MedinaVideoScreen from '../Screens/MedinaLive';
 import MakkahLiveScreen from '../Screens/MakkahLive';
 import MosquesMapScreen from '../Screens/MosquesMap';
 import AudioPlayerScreen from '../Screens/AudioPlayer';
-// import TestAudioPlayerScreen from '../Screens/TestAudioPlayer';
+import VideoPlayerScreen from '../Screens/VideoPlayer';
+import VideoPlayer2Screen from '../Screens/VideoPlayer2';
 
 function CustomDrawerContent(props) {
   return (
@@ -59,6 +60,8 @@ function MyDrawer({navigation}) {
       <Drawer.Screen name="MakkahLive" component={MakkahLiveScreen} />
       <Drawer.Screen name="MosquesMap" component={MosquesMapScreen} />
       <Drawer.Screen name="AudioPlayer" component={AudioPlayerScreen} />
+      <Drawer.Screen name="VideoPlayer" component={VideoPlayerScreen} />
+      <Drawer.Screen name="VideoPlayer2" component={VideoPlayer2Screen} />
     </Drawer.Navigator>
   );
 }
