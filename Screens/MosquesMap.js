@@ -8,7 +8,9 @@ import Loading from './Loading';
 function MosquesMapScreen() {
   return (
     <WebView
-      source={{uri: 'https://www.islamicity.org/PrayerTimes/'}}
+      source={{
+        uri: 'https://mubasher.aljazeera.net/live',
+      }}
       startInLoadingState={true}
       renderLoading={() => <Loading />}
       renderError={errorName => Alert.alert('Error: ' + errorName)}
@@ -21,3 +23,4 @@ export default MosquesMapScreen;
 
 // https://github.com/react-native-webview/react-native-webview/blob/master/docs/Guide.md
 // https://github.com/react-native-webview/react-native-webview/blob/master/docs/Reference.md
+// https://www.islamicity.org/PrayerTimes/

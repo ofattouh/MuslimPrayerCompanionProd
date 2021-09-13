@@ -132,7 +132,6 @@ function AudioPlayerScreen({navigation}) {
         console.log('Player stopped.');
       } else if (event.type === Event.PlaybackError) {
         // console.warn(event.code + ': ' + event.message);
-        Alert.alert('PlaybackError:');
         Alert.alert(event.code + ',' + event.message);
       }
     },
