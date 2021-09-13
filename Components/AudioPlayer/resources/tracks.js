@@ -1,11 +1,12 @@
 const tracksData = [
   {
-    url: require('./sounds/pure.m4a'),
-    title: 'Pure M4A',
-    artist: 'Pure M4A',
+    url: require('./sounds/pure.m4a'), // required
+    title: 'Pure M4A', // required
+    artist: 'Pure M4A', // required
     id: '1',
     artwork: 'https://picsum.photos/500/500.jpg?random=6000',
     // artwork: require('./artworks/prayer.jpeg'),
+    // duration: 20
   },
   {
     url: require('./sounds/addictedtoyou.mp3'),

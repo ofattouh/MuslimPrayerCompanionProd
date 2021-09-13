@@ -23,11 +23,14 @@ import Slider from '@react-native-community/slider';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 // import localTrack from '../Components/AudioPlayer/resources/sounds/pure.m4a';
-import tracksData from '../Components/AudioPlayer/resources/tracks'; // saved local
+import tracksData from '../Components/AudioPlayer/resources/tracks'; // saved locally
 import playlistData from '../Components/AudioPlayer/data/playlist.json'; // streaming
 
 const setup = async () => {
   try {
+    // make sure everything is initialized
+    await TrackPlayer.setupPlayer({waitForBuffer: true});
+
     await TrackPlayer.updateOptions({
       stopWithApp: true, // (Android) false=> music continues in background even when app is closed
       capabilities: [
@@ -50,15 +53,12 @@ const setup = async () => {
         nextIcon: require('./next-icon.png'),
         icon: require('./notification-icon.png') */
     });
-
-    await TrackPlayer.setupPlayer({waitForBuffer: true});
   } catch (e) {
     console.log(e);
+    Alert.alert(e);
   }
 
-  // await TrackPlayer.add(localTrack);
-  // console.log(tracksData);
-
+  // await TrackPlayer.add(playlistData);
   await TrackPlayer.add(playlistData.concat(tracksData));
   TrackPlayer.setRepeatMode(RepeatMode.Queue); // Repeats the whole queue after last song in track
 };
@@ -84,7 +84,6 @@ const togglePlayback = async (playbackState: State) => {
       await TrackPlayer.play();
     } else {
       console.log('\nThe player is paused...');
-      // console.log(State);
       await TrackPlayer.pause();
     }
   }
@@ -109,7 +108,7 @@ function AudioPlayerScreen({navigation}) {
       Event.PlaybackError,
     ],
     async event => {
-      console.log(event);
+      // console.log(event);
 
       if (
         event.type === Event.PlaybackTrackChanged &&
@@ -133,7 +132,8 @@ function AudioPlayerScreen({navigation}) {
         console.log('Player stopped.');
       } else if (event.type === Event.PlaybackError) {
         // console.warn(event.code + ': ' + event.message);
-        Alert.alert('Try back later! ' + event.code + ':' + event.message);
+        Alert.alert('PlaybackError:');
+        Alert.alert(event.code + ',' + event.message);
       }
     },
   );
@@ -181,9 +181,11 @@ function AudioPlayerScreen({navigation}) {
           </Text>
 
           <Text style={styles.progressLabelText}>
+            {/*
             {new Date((progress.duration - progress.position) * 1000)
               .toISOString()
               .substr(14, 5)}
+            */}
           </Text>
         </View>
       </View>
