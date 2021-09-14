@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {StyleSheet} from 'react-native';
 import {WebView} from 'react-native-webview';
 
 function PrayersScreen({navigation}) {
@@ -9,17 +10,26 @@ function PrayersScreen({navigation}) {
       source={{
         html:
           '<div>' +
-          '<h2>Salah Times</h2>' +
-          '<iframe style="width: 582px; height: 358px; border: 0;" scrolling="no" src="https://www.islamicfinder.org/prayer-widget/"></iframe>' +
+          '<iframe width="940" height="350" border="0" scrolling="no" src="https://www.islamicfinder.org/prayer-widget/"></iframe>' +
+          '<hr style="margin-bottom: 140px;" />' +
+          '<iframe width="940" height="1000" src="https://www.youtube.com/embed/25CIhQ-V2tA" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>' +
           '</div>',
       }}
-      style={{marginTop: 5}}
-      containerStyle={{flex: 0, height: '100%'}}
+      // style={{marginTop: 5}}
+      containerStyle={styles.screenContainer}
     />
   );
 }
 
 export default PrayersScreen;
+
+const styles = StyleSheet.create({
+  screenContainer: {
+    flex: 1,
+    margin: '1%',
+    // backgroundColor: '#212121',
+  },
+});
 
 // https://github.com/react-native-webview/react-native-webview/blob/master/docs/Guide.md
 // https://github.com/react-native-webview/react-native-webview/blob/master/docs/Reference.md
