@@ -15,7 +15,6 @@ function PrayersScreen({navigation}) {
           '<iframe width="940" height="1000" src="https://www.youtube.com/embed/25CIhQ-V2tA" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>' +
           '</div>',
       }}
-      // style={{marginTop: 5}}
       containerStyle={styles.screenContainer}
     />
   );

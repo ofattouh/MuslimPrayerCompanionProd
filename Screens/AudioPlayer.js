@@ -180,36 +180,30 @@ function AudioPlayerScreen({navigation}) {
           </Text>
 
           <Text style={styles.progressLabelText}>
-            {/*
-            {new Date((progress.duration - progress.position) * 1000)
-              .toISOString()
-              .substr(14, 5)}
-            */}
+            {progress.duration > 0
+              ? new Date((progress.duration - progress.position) * 1000)
+                  .toISOString()
+                  .substr(14, 5)
+              : null}
           </Text>
         </View>
       </View>
 
       <View style={styles.actionRowContainer}>
         <TouchableOpacity onPress={() => TrackPlayer.skipToPrevious()}>
-          <Text style={styles.secondaryActionButton}>
-            <Icon name="step-backward" size={25} color="#fff" />
-          </Text>
+          <Icon name="step-backward" size={25} color="#fff" />
         </TouchableOpacity>
 
         <TouchableOpacity onPress={() => togglePlayback(playbackState)}>
-          <Text style={styles.primaryActionButton}>
-            {playbackState === State.Playing ? (
-              <Icon name="pause" size={30} color="#fff" />
-            ) : (
-              <Icon name="play" size={30} color="#fff" />
-            )}
-          </Text>
+          {playbackState === State.Playing ? (
+            <Icon name="pause" size={30} color="#fff" />
+          ) : (
+            <Icon name="play" size={30} color="#fff" />
+          )}
         </TouchableOpacity>
 
         <TouchableOpacity onPress={() => TrackPlayer.skipToNext()}>
-          <Text style={styles.secondaryActionButton}>
-            <Icon name="step-forward" size={25} color="#fff" />
-          </Text>
+          <Icon name="step-forward" size={25} color="#fff" />
         </TouchableOpacity>
       </View>
 
@@ -281,10 +275,6 @@ const styles = StyleSheet.create({
   primaryActionButton: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#FFD479',
-  },
-  secondaryActionButton: {
-    fontSize: 14,
     color: '#FFD479',
   },
   playingStats: {
