@@ -255,6 +255,7 @@ const styles = StyleSheet.create({
 
 // https://github.com/react-native-video/react-native-video
 // https://github.com/react-native-video/react-native-video/tree/master/examples/basic
+// https://github.com/react-native-video/react-native-video/blob/master/examples/basic/index.android.js
 // https://github.com/cornedor/react-native-video-player
 // https://github.com/itsnubix/react-native-video-controls
 // https://github.com/react-native-video/react-native-video/tree/master/examples
