@@ -44,6 +44,7 @@ const setup = async () => {
       ],
       // (Android only) Capabilities that will show up when notification in compact form
       compactCapabilities: [Capability.Play, Capability.Pause, Capability.Stop],
+      notificationCapabilities: [Capability.Play, Capability.Stop],
 
       // (Android only) Icons for the notification (instead of default ones)
       /* playIcon: require('./play-icon.png'),
@@ -55,7 +56,6 @@ const setup = async () => {
     });
   } catch (e) {
     console.log(e);
-    Alert.alert(e);
   }
 
   // await TrackPlayer.add(playlistData);
@@ -79,11 +79,12 @@ const togglePlayback = async (playbackState: State) => {
     if (
       playbackState === State.Ready ||
       playbackState === State.Paused ||
-      playbackState === State.Connecting
+      playbackState === State.Connecting ||
+      playbackState === State.None
     ) {
       await TrackPlayer.play();
     } else {
-      console.log('\nThe player is paused...');
+      // console.log('\nAudio player is paused...');
       await TrackPlayer.pause();
     }
   }
@@ -96,6 +97,7 @@ function AudioPlayerScreen({navigation}) {
   const [trackArtwork, setTrackArtwork] = useState();
   const [trackTitle, setTrackTitle] = useState();
   const [trackArtist, setTrackArtist] = useState();
+  const [playerError, setPlayerError] = useState();
 
   useTrackPlayerEvents(
     [
@@ -120,6 +122,7 @@ function AudioPlayerScreen({navigation}) {
         setTrackTitle(title);
         setTrackArtist(artist);
         setTrackArtwork(artwork);
+        setPlayerError('no');
       } else if (event.type === Event.RemotePause) {
         TrackPlayer.pause();
       } else if (event.type === Event.RemotePlay) {
@@ -133,6 +136,7 @@ function AudioPlayerScreen({navigation}) {
       } else if (event.type === Event.PlaybackError) {
         // console.warn(event.code + ': ' + event.message);
         Alert.alert(event.code + ',' + event.message);
+        setPlayerError('yes');
       }
     },
   );
@@ -176,7 +180,9 @@ function AudioPlayerScreen({navigation}) {
 
         <View style={styles.progressLabelContainer}>
           <Text style={styles.progressLabelText}>
-            {new Date(progress.position * 1000).toISOString().substr(14, 5)}
+            {progress.duration > 0
+              ? new Date(progress.position * 1000).toISOString().substr(14, 5)
+              : null}
           </Text>
 
           <Text style={styles.progressLabelText}>
@@ -209,15 +215,23 @@ function AudioPlayerScreen({navigation}) {
 
       <View>
         <Text style={styles.playingStats}>
+          {playbackState === State.None && playerError === 'yes' ? (
+            <Text>Radio station is not available. Try back later!</Text>
+          ) : (
+            <Text>
+              {'\n '} {progress.buffered} seconds buffered out of{' '}
+              {new Date((progress.duration - progress.position) * 1000)
+                .toISOString()
+                .substr(14, 5)}
+            </Text>
+          )}
+          {/*
           Track progress: {'\n'} {progress.position} seconds out of{' '}
           {new Date((progress.duration - progress.position) * 1000)
             .toISOString()
             .substr(14, 5)}
           {'\n\n'}
-          Buffered progress: {'\n'} {progress.buffered} seconds buffered out of{' '}
-          {new Date((progress.duration - progress.position) * 1000)
-            .toISOString()
-            .substr(14, 5)}
+          */}
         </Text>
       </View>
     </SafeAreaView>
@@ -250,6 +264,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '200',
     color: 'white',
+    marginTop: 20,
   },
   progressContainer: {
     height: 40,
@@ -279,7 +294,7 @@ const styles = StyleSheet.create({
   },
   playingStats: {
     fontSize: 14,
-    marginBottom: '10%',
+    marginBottom: '20%',
     color: '#FFD479',
   },
   /*
@@ -305,6 +320,7 @@ export default AudioPlayerScreen;
 // https://react-native-track-player.js.org/documentation/
 // https://github.com/callstack/react-native-slider
 // https://oblador.github.io/react-native-vector-icons/
+// https://codesandbox.io/examples/package/react-native-track-player
 
 // Audio Streaming API:
 // http://www.liveradiu.com/p/radio-stations.html
