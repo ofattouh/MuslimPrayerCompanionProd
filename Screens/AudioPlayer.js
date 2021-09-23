@@ -86,7 +86,8 @@ const togglePlayback = async (playbackState: State) => {
       playbackState === State.Ready ||
       playbackState === State.Paused ||
       playbackState === State.Connecting ||
-      playbackState === State.None
+      playbackState === State.None ||
+      playbackState === State.Stopped
     ) {
       await TrackPlayer.play();
     } else {
