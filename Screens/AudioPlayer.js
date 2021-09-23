@@ -44,7 +44,11 @@ const setup = async () => {
       ],
       // (Android only) Capabilities that will show up when notification in compact form
       compactCapabilities: [Capability.Play, Capability.Pause, Capability.Stop],
-      notificationCapabilities: [Capability.Play, Capability.Stop],
+      notificationCapabilities: [
+        Capability.Play,
+        Capability.Pause,
+        Capability.Stop,
+      ],
 
       // (Android only) Icons for the notification (instead of default ones)
       /* playIcon: require('./play-icon.png'),
@@ -55,6 +59,7 @@ const setup = async () => {
         icon: require('./notification-icon.png') */
     });
   } catch (e) {
+    Alert.alert(e);
     console.log(e);
   }
 
@@ -69,6 +74,7 @@ const togglePlayback = async (playbackState: State) => {
   // Debug
   const state = await TrackPlayer.getState();
   console.log(state + ',' + playbackState);
+  Alert.alert(state + ',' + playbackState);
 
   // LOG  {"0": "None", "1": "Stopped", "2": "Paused", "3": "Playing", "6": "Buffering", "8": "Connecting", "Buffering": 6, "Connecting": 8, "None": 0, "Paused": 2, "Playing": 3, "Ready": 2, "Stopped": 1}
 
@@ -134,9 +140,9 @@ function AudioPlayerScreen({navigation}) {
       } else if (event.type === Event.RemoteStop) {
         console.log('Player stopped.');
       } else if (event.type === Event.PlaybackError) {
+        setPlayerError('yes');
         // console.warn(event.code + ': ' + event.message);
         Alert.alert(event.code + ',' + event.message);
-        setPlayerError('yes');
       }
     },
   );
