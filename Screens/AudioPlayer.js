@@ -73,13 +73,15 @@ const togglePlayback = async (playbackState: State) => {
 
   // Debug
   const state = await TrackPlayer.getState();
-  console.log(state + ',' + playbackState);
+
+  // playbackState = 1;
   Alert.alert(state + ',' + playbackState);
 
   // LOG  {"0": "None", "1": "Stopped", "2": "Paused", "3": "Playing", "6": "Buffering", "8": "Connecting", "Buffering": 6, "Connecting": 8, "None": 0, "Paused": 2, "Playing": 3, "Ready": 2, "Stopped": 1}
 
   if (currentTrack == null) {
-    console.log('No track to play!');
+    Alert.alert('No track to play!' + currentTrack);
+
     // TODO: Perhaps present an error or restart the playlist?
   } else {
     if (
@@ -89,9 +91,10 @@ const togglePlayback = async (playbackState: State) => {
       playbackState === State.None ||
       playbackState === State.Stopped
     ) {
+      Alert.alert('Audio player is playing...');
       await TrackPlayer.play();
     } else {
-      // console.log('\nAudio player is paused...');
+      Alert.alert('Audio player is paused...');
       await TrackPlayer.pause();
     }
   }
@@ -117,7 +120,7 @@ function AudioPlayerScreen({navigation}) {
       Event.PlaybackError,
     ],
     async event => {
-      // console.log(event);
+      // Alert.alert(event.type + ',nextTrack: ' + event.nextTrack);
 
       if (
         event.type === Event.PlaybackTrackChanged &&
@@ -143,7 +146,14 @@ function AudioPlayerScreen({navigation}) {
       } else if (event.type === Event.PlaybackError) {
         setPlayerError('yes');
         // console.warn(event.code + ': ' + event.message);
-        Alert.alert(event.code + ',' + event.message);
+        Alert.alert(event.nextTrack + ': ' + event.message);
+      }
+
+      if (event.nextTrack === undefined) {
+        Alert.alert('Catch: ' + event.type + ',' + event.message);
+        setPlayerError('yes');
+        await TrackPlayer.add(playlistData.concat(tracksData));
+        TrackPlayer.setRepeatMode(RepeatMode.Queue);
       }
     },
   );
@@ -172,18 +182,20 @@ function AudioPlayerScreen({navigation}) {
         <Text style={styles.titleText}>{trackTitle}</Text>
         <Text style={styles.artistText}>{trackArtist}</Text>
 
-        <Slider
-          style={styles.progressContainer}
-          value={progress.position}
-          minimumValue={0}
-          maximumValue={progress.duration}
-          thumbTintColor="#FFD479"
-          minimumTrackTintColor="#FFD479"
-          maximumTrackTintColor="#FFFFFF"
-          onSlidingComplete={async value => {
-            await TrackPlayer.seekTo(value);
-          }}
-        />
+        {progress.duration > 0 ? (
+          <Slider
+            style={styles.progressContainer}
+            value={progress.position}
+            minimumValue={0}
+            maximumValue={progress.duration}
+            thumbTintColor="#FFD479"
+            minimumTrackTintColor="#FFD479"
+            maximumTrackTintColor="#FFFFFF"
+            onSlidingComplete={async value => {
+              await TrackPlayer.seekTo(value);
+            }}
+          />
+        ) : null}
 
         <View style={styles.progressLabelContainer}>
           <Text style={styles.progressLabelText}>
@@ -222,7 +234,7 @@ function AudioPlayerScreen({navigation}) {
 
       <View>
         <Text style={styles.playingStats}>
-          {playbackState === State.None && playerError === 'yes' ? (
+          {playbackState !== State.Playing && playerError === 'yes' ? (
             <Text>Radio station is not available. Try back later!</Text>
           ) : (
             <Text>
