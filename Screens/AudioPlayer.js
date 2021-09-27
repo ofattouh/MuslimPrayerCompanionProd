@@ -344,4 +344,5 @@ export default AudioPlayerScreen;
 // Audio Streaming API:
 // http://www.liveradiu.com/p/radio-stations.html
 // https://www.islamicity.org/channels/online-radio/
+// http://en.quran.com.kw/tafsir-by-al-sharawi/
 // http://www.arabic-keyboard.org/
