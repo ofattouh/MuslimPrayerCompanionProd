@@ -1,20 +1,29 @@
 import * as React from 'react';
-import {SafeAreaView, StyleSheet} from 'react-native';
+import {SafeAreaView, StyleSheet, Text} from 'react-native';
 import VideoPlayer from 'react-native-video-player';
 
 function VideoPlayer2Screen({navigation}) {
   return (
     <SafeAreaView style={styles.container}>
+      <Text style={styles.paragraph}>Video player has limited features</Text>
       <VideoPlayer
         video={{
           uri: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
         }}
         videoWidth={1600}
         videoHeight={1200}
-        resizeMode={'cover'}
+        resizeMode={'cover'} // default: contain
+        pauseOnPress={true}
         thumbnail={{
           uri: 'https://picsum.photos/500/500.jpg?random=' + Math.random(),
         }}
+        endThumbnail={{
+          uri: 'https://picsum.photos/500/500.jpg?random=' + Math.random(),
+        }}
+        // autoplay={true}
+        // loop
+        // duration={} // fallback
+        // customStyles={}
       />
     </SafeAreaView>
   );
@@ -23,8 +32,10 @@ function VideoPlayer2Screen({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 15,
     //backgroundColor: 'black',
+  },
+  paragraph: {
+    padding: 15,
   },
 });
 
