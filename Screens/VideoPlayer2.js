@@ -8,7 +8,6 @@ function VideoPlayer2Screen({navigation}) {
       <VideoPlayer
         video={{
           uri: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-          // uri: 'https://dm0qx8t0i9gc9.cloudfront.net/watermarks/video/pbJRSBz/queenstown-at-the-southern-island-new-zealand_qkqcqevw__a07093cbb3fae6bfd7f9a82e64bcefdb__P360.mp4',
         }}
         videoWidth={1600}
         videoHeight={1200}
