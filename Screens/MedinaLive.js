@@ -23,7 +23,7 @@ function MedinaLiveScreen({route, navigation}) {
       <YoutubePlayer
         height={300}
         play={playing}
-        videoId={'f8whwxO-_jI'}
+        videoId={'22hlhTCTUaY'}
         onChangeState={onStateChange}
       />
 
@@ -40,7 +40,7 @@ function MedinaLiveScreen({route, navigation}) {
         loadingProps={{animating: true}}
         loadingStyle={{}}
         onPress={togglePlaying}
-        title={playing ? 'pause' : 'play'} 
+        title={playing ? 'pause' : 'play'}
         titleProps={{}}
         titleStyle={{marginHorizontal: 5}}
       />

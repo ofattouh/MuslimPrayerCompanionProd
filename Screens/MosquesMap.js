@@ -9,7 +9,7 @@ function MosquesMapScreen() {
   return (
     <WebView
       source={{
-        uri: 'https://mubasher.aljazeera.net/live',
+        uri: 'https://www.performancehealth.com/articles/25-therapy-putty-exercises--activities-for-kids',
       }}
       startInLoadingState={true}
       renderLoading={() => <Loading />}

@@ -12,7 +12,7 @@ function PrayersScreen({navigation}) {
           '<div>' +
           '<iframe width="940" height="350" border="0" scrolling="no" src="https://www.islamicfinder.org/prayer-widget/"></iframe>' +
           '<hr style="margin-bottom: 140px;" />' +
-          '<iframe width="940" height="1000" src="https://www.youtube.com/embed/25CIhQ-V2tA" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>' +
+          '<iframe width="940" height="1160" src="https://www.youtube.com/embed/su1qwW56Rco" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>' +
           '</div>',
       }}
       containerStyle={styles.screenContainer}

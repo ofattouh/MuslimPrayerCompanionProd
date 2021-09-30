@@ -45,7 +45,7 @@ function MakkahLiveScreen() {
         ref={controlRef}
         play={playing}
         mute={isMute}
-        videoId={'YQu9Br72PP8'}
+        videoId={'bR8k2IwihsU'}
         onChangeState={onStateChange}
       />
 
