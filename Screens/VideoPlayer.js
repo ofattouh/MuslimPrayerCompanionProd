@@ -1,28 +1,7 @@
-/* import React from 'react';
-import {Text, SafeAreaView, StyleSheet} from 'react-native';
-import VideoPlayer from 'react-native-video-controls';
-// import Video from 'react-native-video'; */
-
-/*
-function VideoPlayerScreen({navigation}) {
-  return (
-    <SafeAreaView style={styles.container}>
-      <VideoPlayer
-        source={{uri: 'https://vjs.zencdn.net/v/oceans.mp4'}}
-        // navigator={this.props.navigator}
-      />
-
-    </SafeAreaView>
-  );
-}
-
-export default VideoPlayerScreen;
-
-*/
-
 import React, {Component} from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, TouchableOpacity, View, Alert} from 'react-native';
 import Video from 'react-native-video';
+import {Slider} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default class VideoPlayerScreen extends Component {
@@ -33,27 +12,36 @@ export default class VideoPlayerScreen extends Component {
     resizeMode: 'contain', // cover, stretch
     duration: 0.0,
     currentTime: 0.0,
-    paused: true,
-    repeat: false,
-    audioOnly: false, // default false, poster must be set
+    paused: true, // default false
+    repeat: false, // default false
+    audioOnly: false, // default false, if true, poster prop must be set to play the audio
   };
 
   video: Video;
 
   onLoad = data => {
+    // callback when the media is loaded and ready to play
     this.setState({duration: data.duration});
   };
 
   onProgress = data => {
+    // Callback on progressUpdateInterval seconds about which position media is currently playing
     this.setState({currentTime: data.currentTime});
+  };
+
+  setVolume = step => {
+    this.setState({volume: Number.parseInt(step.value, 10) / 100});
+    console.log('Volume: ' + this.state.volume);
   };
 
   onEnd = () => {
     this.setState({paused: true});
+    // Seek to the specified position represented by seconds. seconds is a float value
     this.video.seek(0);
   };
 
   onAudioBecomingNoisy = () => {
+    // audio output is being switched from external source like headphones back to internal speaker
     this.setState({paused: true});
   };
 
@@ -66,7 +54,7 @@ export default class VideoPlayerScreen extends Component {
   };
 
   onError = () => {
-    console.log('error');
+    Alert.alert('Error playing video/audio!');
   };
 
   togglePlay = () => {
@@ -113,13 +101,14 @@ export default class VideoPlayerScreen extends Component {
             onBuffer={this.onBuffer}
             onError={this.onError}
             repeat={this.state.repeat}
-            thumbnail={{
-              uri: 'https://picsum.photos/500/500.jpg?random=10',
-            }}
+            /* thumbnail={{
+              uri: 'https://picsum.photos/500/500.jpg?random=200',
+            }} */
             style={styles.backgroundVideo}
             audioOnly={this.state.audioOnly}
-            poster={'https://picsum.photos/500/500.jpg?random=10'}
-            playInBackground={true} // allows to continue listening to audio. default false
+            poster={'https://picsum.photos/500/500.jpg?random=300'}
+            posterResizeMode={'contain'} // default
+            playInBackground={true} // continue listening to audio when app in background. default false
             // controls={true} // built-in controls, default false
           />
         </TouchableOpacity>
@@ -172,6 +161,7 @@ export default class VideoPlayerScreen extends Component {
 
               <TouchableOpacity
                 onPress={() => this.setState({resizeMode: 'cover'})}>
+                {/* cover: Fill the whole screen at aspect ratio */}
                 <Icon name="resize" size={30} color="#fff" />
               </TouchableOpacity>
 
@@ -194,6 +184,43 @@ export default class VideoPlayerScreen extends Component {
               </TouchableOpacity>
                 */}
             </View>
+          </View>
+
+          <View style={styles.sliderVolume}>
+            <TouchableOpacity>
+              <Slider
+                animateTransitions
+                animationType="spring"
+                maximumTrackTintColor="#fff"
+                maximumValue={100}
+                minimumTrackTintColor="#2C2C2C"
+                minimumValue={0}
+                // onSlidingComplete={() => console.log('onSlidingComplete')}
+                // onSlidingStart={() => console.log('onSlidingStart')}
+                onValueChange={value => this.setVolume({value})}
+                // orientation="vertical"
+                orientation="horizontal"
+                step={1}
+                style={styles.slider}
+                thumbStyle={styles.thumbStyle}
+                thumbProps={{
+                  children: (
+                    <Icon
+                      name="volume-high"
+                      type="MaterialCommunityIcons"
+                      size={20}
+                      reverse
+                      containerStyle={styles.containerStyle}
+                      color="#fff"
+                    />
+                  ),
+                }}
+                thumbTintColor="#2C2C2C"
+                thumbTouchSize={styles.thumbTouchSize}
+                trackStyle={styles.trackStyle}
+                value={this.state.volume}
+              />
+            </TouchableOpacity>
           </View>
         </View>
       </View>
@@ -219,7 +246,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     borderRadius: 5,
     position: 'absolute',
-    bottom: 70,
+    top: 650,
     left: 20,
     right: 20,
   },
@@ -251,12 +278,39 @@ const styles = StyleSheet.create({
     height: 5,
     backgroundColor: '#2C2C2C',
   },
+  volumeControl: {
+    padding: 5,
+  },
+  sliderVolume: {
+    width: '70%',
+    /* height: 70, */ // Vertical slider
+  },
+  sliderText: {
+    color: '#fff',
+  },
+  thumbStyle: {
+    height: 20,
+    width: 20,
+  },
+  thumbTouchSize: {
+    width: 40,
+    height: 40,
+  },
+  trackStyle: {
+    height: 3,
+    borderRadius: 10,
+  },
+  containerStyle: {
+    bottom: 20,
+    right: 20,
+  },
 });
 
 // https://github.com/react-native-video/react-native-video
-// https://github.com/react-native-video/react-native-video/tree/master/examples/basic
 // https://github.com/react-native-video/react-native-video/blob/master/examples/basic/index.android.js
 // https://github.com/cornedor/react-native-video-player
 // https://github.com/itsnubix/react-native-video-controls
 // https://github.com/react-native-video/react-native-video/tree/master/examples
 // https://oblador.github.io/react-native-vector-icons/
+// https://reactnativeelements.com/docs/slider/
+// https://react-native-elements.js.org/#/slider

@@ -9,6 +9,7 @@ import {
 // Components
 import MyHeader from '../Components/MyHeader';
 import MyTabs from '../Components/MyTabs';
+import MySlider from '../Components/MySlider';
 
 // Screens
 import ProfileScreen from '../Screens/UserProfile';
@@ -64,6 +65,7 @@ function MyDrawer({navigation}) {
       <Drawer.Screen name="VideoPlayer" component={VideoPlayerScreen} />
       <Drawer.Screen name="VideoPlayer2" component={VideoPlayer2Screen} />
       <Drawer.Screen name="VideoPlayer3" component={VideoPlayer3Screen} />
+      <Drawer.Screen name="MySlider" component={MySlider} />
     </Drawer.Navigator>
   );
 }
