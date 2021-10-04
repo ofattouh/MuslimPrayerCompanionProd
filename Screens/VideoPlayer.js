@@ -1,5 +1,11 @@
 import React, {Component} from 'react';
-import {StyleSheet, TouchableOpacity, View, Alert} from 'react-native';
+import {
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  Alert,
+  // Animated,
+} from 'react-native';
 import Video from 'react-native-video';
 import {Slider} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -7,7 +13,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 export default class VideoPlayerScreen extends Component {
   state = {
     rate: 1,
-    volume: 1,
+    volume: 0.2, // 1.0 maximum (default), 0.0 muted
     muted: false, // default false
     resizeMode: 'contain', // cover, stretch
     duration: 0.0,
@@ -31,7 +37,7 @@ export default class VideoPlayerScreen extends Component {
 
   setVolume = step => {
     this.setState({volume: Number.parseInt(step.value, 10) / 100});
-    console.log('Volume: ' + this.state.volume);
+    // console.log('Volume: ' + this.state.volume);
   };
 
   onEnd = () => {
@@ -189,21 +195,28 @@ export default class VideoPlayerScreen extends Component {
           <View style={styles.sliderVolume}>
             <TouchableOpacity>
               <Slider
-                animateTransitions
-                animationType="spring"
-                maximumTrackTintColor="#fff"
+                // animateTransitions // default: spring
+                // animationType="spring" // timing
+                maximumTrackTintColor="#2C2C2C"
                 maximumValue={100}
-                minimumTrackTintColor="#2C2C2C"
+                minimumTrackTintColor="#fff"
                 minimumValue={0}
-                // onSlidingComplete={() => console.log('onSlidingComplete')}
-                // onSlidingStart={() => console.log('onSlidingStart')}
+                // onSlidingComplete={() => console.log('Slider is released)')}
+                // onSlidingStart={() => console.log('Slider is pressed')}
                 onValueChange={value => this.setVolume({value})}
                 // orientation="vertical"
-                orientation="horizontal"
+                orientation="horizontal" // default
                 step={1}
                 style={styles.slider}
                 thumbStyle={styles.thumbStyle}
+                // thumbImage // Sets an image for the thumb
                 thumbProps={{
+                  /* Replace Thumb icon with custom image
+                  Component: Animated.Image,
+                  source: {
+                    uri: 'https://findicons.com/files/icons/1637/file_icons_vs_2/48/jpg.png',
+                  },
+                  */
                   children: (
                     <Icon
                       name="volume-high"
@@ -218,7 +231,7 @@ export default class VideoPlayerScreen extends Component {
                 thumbTintColor="#2C2C2C"
                 thumbTouchSize={styles.thumbTouchSize}
                 trackStyle={styles.trackStyle}
-                value={this.state.volume}
+                value={0} // initial value, default: 0
               />
             </TouchableOpacity>
           </View>
@@ -282,7 +295,7 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   sliderVolume: {
-    width: '70%',
+    width: '60%',
     /* height: 70, */ // Vertical slider
   },
   sliderText: {
@@ -291,6 +304,7 @@ const styles = StyleSheet.create({
   thumbStyle: {
     height: 20,
     width: 20,
+    backgroundColor: 'transparent',
   },
   thumbTouchSize: {
     width: 40,
@@ -299,6 +313,7 @@ const styles = StyleSheet.create({
   trackStyle: {
     height: 3,
     borderRadius: 10,
+    backgroundColor: 'transparent',
   },
   containerStyle: {
     bottom: 20,

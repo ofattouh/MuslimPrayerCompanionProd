@@ -29,6 +29,7 @@ function App() {
 
 export default App;
 
+// yarn install // will install all package.json dependancies
 // npx react-native init MyApp
 // npx react-native run-android
 // c:\>adb devices
