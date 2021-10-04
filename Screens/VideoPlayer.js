@@ -13,9 +13,9 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 export default class VideoPlayerScreen extends Component {
   state = {
     rate: 1,
-    volume: 0.2, // 1.0 maximum (default), 0.0 muted
-    muted: false, // default false
-    resizeMode: 'contain', // cover, stretch
+    volume: 0.0, // 1.0 maximum (default), 0.0 muted
+    muted: true, // default false
+    resizeMode: 'contain', // contain(default), cover, stretch
     duration: 0.0,
     currentTime: 0.0,
     paused: true, // default false
@@ -36,6 +36,7 @@ export default class VideoPlayerScreen extends Component {
   };
 
   setVolume = step => {
+    this.setState({muted: false});
     this.setState({volume: Number.parseInt(step.value, 10) / 100});
     // console.log('Volume: ' + this.state.volume);
   };
@@ -60,7 +61,7 @@ export default class VideoPlayerScreen extends Component {
   };
 
   onError = () => {
-    Alert.alert('Error playing video/audio!');
+    Alert.alert('Error playing video! Try again later');
   };
 
   togglePlay = () => {
@@ -90,10 +91,10 @@ export default class VideoPlayerScreen extends Component {
             ref={(ref: Video) => {
               this.video = ref;
             }}
-            /* For ExoPlayer */
-            /* source={{ uri: 'http://www.youtube.com/api/manifest/dash/id/bf5bb2419360daf1/source/youtube?as=fmp4_audio_clear,fmp4_sd_hd_clear&sparams=ip,ipbits,expire,source,id,as&ip=0.0.0.0&ipbits=0&expire=19000000000&signature=51AF5F39AB0CEC3E5497CD9C900EBFEAECCCB5C7.8506521BFC350652163895D4C26DEE124209AA9E&key=ik0', type: 'mpd' }} */
-            source={{uri: 'https://vjs.zencdn.net/v/oceans.mp4'}}
-            // source={require('../Components/VideoPlayer/resources/my-video.mp4')}
+            /* For ExoPlayer Android */
+            // source={{ uri: 'http://www.youtube.com/api/manifest/dash/id/bf5bb2419360daf1/source/youtube?as=fmp4_audio_clear,fmp4_sd_hd_clear&sparams=ip,ipbits,expire,source,id,as&ip=0.0.0.0&ipbits=0&expire=19000000000&signature=51AF5F39AB0CEC3E5497CD9C900EBFEAECCCB5C7.8506521BFC350652163895D4C26DEE124209AA9E&key=ik0', type: 'mpd' }}
+            // source={require('../Components/VideoPlayer/resources/my-video.mp4')} // local
+            source={{uri: 'https://vjs.zencdn.net/v/oceans.mp4'}} // network
             rate={this.state.rate}
             paused={this.state.paused}
             volume={this.state.volume}
@@ -107,15 +108,12 @@ export default class VideoPlayerScreen extends Component {
             onBuffer={this.onBuffer}
             onError={this.onError}
             repeat={this.state.repeat}
-            /* thumbnail={{
-              uri: 'https://picsum.photos/500/500.jpg?random=200',
-            }} */
             style={styles.backgroundVideo}
             audioOnly={this.state.audioOnly}
             poster={'https://picsum.photos/500/500.jpg?random=300'}
-            posterResizeMode={'contain'} // default
+            posterResizeMode={'contain'}
             playInBackground={true} // continue listening to audio when app in background. default false
-            // controls={true} // built-in controls, default false
+            // controls={true} // built-in basic controls, default false
           />
         </TouchableOpacity>
 
@@ -195,8 +193,8 @@ export default class VideoPlayerScreen extends Component {
           <View style={styles.sliderVolume}>
             <TouchableOpacity>
               <Slider
-                // animateTransitions // default: spring
-                // animationType="spring" // timing
+                // animateTransitions // default: false
+                // animationType="spring" // timing, default: spring
                 maximumTrackTintColor="#2C2C2C"
                 maximumValue={100}
                 minimumTrackTintColor="#fff"
@@ -296,7 +294,7 @@ const styles = StyleSheet.create({
   },
   sliderVolume: {
     width: '60%',
-    /* height: 70, */ // Vertical slider
+    /* height: 200, */ // Vertical slider
   },
   sliderText: {
     color: '#fff',
