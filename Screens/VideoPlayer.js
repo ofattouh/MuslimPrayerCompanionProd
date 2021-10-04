@@ -12,13 +12,13 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default class VideoPlayerScreen extends Component {
   state = {
-    rate: 1,
-    volume: 0.0, // 1.0 maximum (default), 0.0 muted
+    rate: 1, // 0.0 - Pauses the video, 1.0 - Play at normal speed
+    volume: 0.0, // 1.0 maximum (default), 0.0 - muted
     muted: true, // default false
     resizeMode: 'contain', // contain(default), cover, stretch
     duration: 0.0,
-    currentTime: 0.0,
-    paused: true, // default false
+    currentTime: 0.0, // beginning
+    paused: true, // default false, Don't auto-play
     repeat: false, // default false
     audioOnly: false, // default false, if true, poster prop must be set to play the audio
   };
@@ -107,11 +107,12 @@ export default class VideoPlayerScreen extends Component {
             onAudioFocusChanged={this.onAudioFocusChanged}
             onBuffer={this.onBuffer}
             onError={this.onError}
+            minLoadRetryCount={3} // default, minimum number of times to retry loading data before reporting error. Useful to recover from transient internet failures
             repeat={this.state.repeat}
             style={styles.backgroundVideo}
             audioOnly={this.state.audioOnly}
-            poster={'https://picsum.photos/500/500.jpg?random=300'}
-            posterResizeMode={'contain'}
+            poster={'https://picsum.photos/500/500.jpg?random=70'} // Image to display while video is loading
+            posterResizeMode={'contain'} // contain(default), cover, center
             playInBackground={true} // continue listening to audio when app in background. default false
             // controls={true} // built-in basic controls, default false
           />

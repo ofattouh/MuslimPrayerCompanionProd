@@ -8,15 +8,15 @@ function MySlider() {
       <Slider
         animateTransitions
         animationType="spring"
-        maximumTrackTintColor="#fff"
+        maximumTrackTintColor="#222"
         maximumValue={100}
-        minimumTrackTintColor="#222"
+        minimumTrackTintColor="#fff"
         minimumValue={0}
-        onSlidingComplete={() => console.log('onSlidingComplete()')}
-        onSlidingStart={() => console.log('onSlidingStart()')}
-        onValueChange={value => console.log('onValueChange()', value)}
+        // onSlidingComplete={() => console.log('onSlidingComplete()')}
+        // onSlidingStart={() => console.log('onSlidingStart()')}
+        // onValueChange={value => console.log('onValueChange()', value)}
         // orientation="vertical"
-        orientation="horizontal"
+        orientation="horizontal" // default
         step={1}
         style={styles.slider}
         thumbStyle={styles.thumbStyle}
