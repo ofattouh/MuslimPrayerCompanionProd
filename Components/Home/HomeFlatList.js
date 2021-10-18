@@ -10,30 +10,7 @@ import {
   Image,
 } from 'react-native';
 
-const data = [
-  {
-    id: '1',
-    content: 'الله اكبر',
-  },
-  {
-    id: '2',
-    content:
-      'رَبَّنَا ظَلَمْنَا أَنفُسَنَا وَإِن لَّمْ تَغْفِرْ لَنَا وَتَرْحَمْنَا لَنَكُونَنَّ مِنَ الْخَاسِرِينَ',
-  },
-  {
-    id: '3',
-    content: 'أَنِّي مَسَّنِيَ الضُّرُّ وَأَنتَ أَرْحَمُ الرَّاحِمِين',
-  },
-  {
-    id: '4',
-    content:
-      'رَّبَّنَا عَلَيْكَ تَوَكَّلْنَا وَإِلَيْكَ أَنَبْنَا وَإِلَيْكَ الْمَصِيرُ',
-  },
-  {
-    id: '5',
-    content: 'رَبِّ إِنِّي لِمَا أَنزَلْتَ إِلَيَّ مِنْ خَيْرٍ فَقِيرٌ',
-  },
-];
+import HomeFlatListData from './HomeFlatListData'; // saved locally
 
 const Item = ({item, onPress, backgroundColor, textColor}) => (
   <TouchableOpacity onPress={onPress} style={[styles.item, backgroundColor]}>
@@ -41,7 +18,7 @@ const Item = ({item, onPress, backgroundColor, textColor}) => (
   </TouchableOpacity>
 );
 
-const MyFlatList = () => {
+const HomeFlatList = () => {
   // const [selectedId, setSelectedId] = useState(null);
 
   const renderSeparator = () => {
@@ -84,7 +61,7 @@ const MyFlatList = () => {
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
-        data={data}
+        data={HomeFlatListData}
         renderItem={renderItem}
         ItemSeparatorComponent={renderSeparator}
         // ListHeaderComponent={renderHeader}
@@ -151,7 +128,7 @@ const styles = StyleSheet.create({
   }, */
 });
 
-export default MyFlatList;
+export default HomeFlatList;
 
 // https://reactnative.dev/docs/flatlist
 // https://reactnative.dev/docs/sectionlist (sectioned)

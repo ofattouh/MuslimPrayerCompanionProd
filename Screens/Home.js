@@ -2,12 +2,12 @@ import * as React from 'react';
 import {SafeAreaView, StyleSheet} from 'react-native';
 
 // Components
-import MyFlatList from '../Components/MyFlatList';
+import HomeFlatList from '../Components/Home/HomeFlatList';
 
 function HomeScreen({navigation}) {
   return (
     <SafeAreaView style={styles.container}>
-      <MyFlatList />
+      <HomeFlatList />
     </SafeAreaView>
   );
 }
