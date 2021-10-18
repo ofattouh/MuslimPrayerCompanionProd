@@ -36,7 +36,7 @@
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -51,5 +51,38 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>UIAppFonts</key>
+	<array>
+		<string>maddina.ttf</string>
+		<string>AntDesign.ttf</string>
+		<string>Entypo.ttf</string>
+		<string>EvilIcons.ttf</string>
+		<string>Feather.ttf</string>
+		<string>FontAwesome.ttf</string>
+		<string>FontAwesome5_Brands.ttf</string>
+		<string>FontAwesome5_Regular.ttf</string>
+		<string>FontAwesome5_Solid.ttf</string>
+		<string>Fontisto.ttf</string>
+		<string>Foundation.ttf</string>
+		<string>Ionicons.ttf</string>
+		<string>MaterialCommunityIcons.ttf</string>
+		<string>MaterialIcons.ttf</string>
+		<string>Octicons.ttf</string>
+		<string>SimpleLineIcons.ttf</string>
+		<string>Zocial.ttf</string>
+		<string>_PDMS_Saleem_QuranFont.ttf</string>
+		<string>Al-Qalam-Quran-Majeed-1.ttf</string>
+		<string>Al-Qalam-Quran-Majeed-2.ttf</string>
+		<string>Al-Qalam-Quran-Majeed.ttf</string>
+		<string>Al-Qalam-Quran.ttf</string>
+		<string>Al-Qalam-Quran-2.ttf</string>
+		<string>ar-Othmani.ttf</string>
+		<string>ar-Quran1.ttf</string>
+		<string>Me-Quran-Volt-Newmet.ttf</string>
+		<string>noorehidayat.ttf</string>
+		<string>noorehira.ttf</string>
+		<string>QUR-STD.TTF</string>
+		<string>ScheherazadeRegOT.ttf</string>
+	</array>
 </dict>
 </plist>

@@ -59,7 +59,7 @@ const setup = async () => {
         icon: require('./notification-icon.png') */
     });
   } catch (e) {
-    Alert.alert(e);
+    // Alert.alert(e);
     console.log(e);
   }
 
@@ -72,11 +72,9 @@ const togglePlayback = async (playbackState: State) => {
   const currentTrack = await TrackPlayer.getCurrentTrack();
 
   // Debug
-  const state = await TrackPlayer.getState();
-
   // playbackState = 1;
-  Alert.alert(state + ',' + playbackState);
-
+  // const state = await TrackPlayer.getState();
+  // Alert.alert(state + ',' + playbackState);
   // LOG  {"0": "None", "1": "Stopped", "2": "Paused", "3": "Playing", "6": "Buffering", "8": "Connecting", "Buffering": 6, "Connecting": 8, "None": 0, "Paused": 2, "Playing": 3, "Ready": 2, "Stopped": 1}
 
   if (currentTrack == null) {
@@ -91,10 +89,10 @@ const togglePlayback = async (playbackState: State) => {
       playbackState === State.None ||
       playbackState === State.Stopped
     ) {
-      Alert.alert('Audio player is playing...');
+      // Alert.alert('Audio player is playing...');
       await TrackPlayer.play();
     } else {
-      Alert.alert('Audio player is paused...');
+      // Alert.alert('Audio player is paused...');
       await TrackPlayer.pause();
     }
   }
@@ -146,11 +144,11 @@ function AudioPlayerScreen({navigation}) {
       } else if (event.type === Event.PlaybackError) {
         setPlayerError('yes');
         // console.warn(event.code + ': ' + event.message);
-        Alert.alert(event.nextTrack + ': ' + event.message);
+        // Alert.alert(event.nextTrack + ': ' + event.message);
       }
 
       if (event.nextTrack === undefined) {
-        Alert.alert('Catch: ' + event.type + ',' + event.message);
+        // Alert.alert('Catch: ' + event.type + ',' + event.message);
         setPlayerError('yes');
         await TrackPlayer.add(playlistData.concat(tracksData));
         TrackPlayer.setRepeatMode(RepeatMode.Queue);

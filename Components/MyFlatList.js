@@ -13,31 +13,31 @@ import {
 const data = [
   {
     id: '1',
-    title: 'Item #1',
-    content:
-      'Lorem Ipsum is that it has a more-or-less normal distribution of letters,',
+    content: 'الله اكبر',
   },
   {
     id: '2',
-    content: 'Item #2 content',
+    content:
+      'رَبَّنَا ظَلَمْنَا أَنفُسَنَا وَإِن لَّمْ تَغْفِرْ لَنَا وَتَرْحَمْنَا لَنَكُونَنَّ مِنَ الْخَاسِرِينَ',
   },
   {
     id: '3',
-    content: 'Item #3 content',
+    content: 'أَنِّي مَسَّنِيَ الضُّرُّ وَأَنتَ أَرْحَمُ الرَّاحِمِين',
   },
   {
     id: '4',
-    content: 'Item #4 content',
+    content:
+      'رَّبَّنَا عَلَيْكَ تَوَكَّلْنَا وَإِلَيْكَ أَنَبْنَا وَإِلَيْكَ الْمَصِيرُ',
   },
   {
     id: '5',
-    content: 'Item #5 content',
+    content: 'رَبِّ إِنِّي لِمَا أَنزَلْتَ إِلَيَّ مِنْ خَيْرٍ فَقِيرٌ',
   },
 ];
 
 const Item = ({item, onPress, backgroundColor, textColor}) => (
   <TouchableOpacity onPress={onPress} style={[styles.item, backgroundColor]}>
-    <Text style={styles.title}>{item.content}</Text>
+    <Text style={styles.content}>{item.content}</Text>
   </TouchableOpacity>
 );
 
@@ -104,10 +104,13 @@ const styles = StyleSheet.create({
     width: '97%',
     padding: 10,
   },
-  title: {
-    fontSize: 20,
-    paddingTop: 10,
-    paddingBottom: 10,
+  content: {
+    // paddingTop: 10,
+    // paddingBottom: 10,
+    fontSize: 35,
+    paddingRight: 35,
+    fontFamily: '_PDMS_Saleem_QuranFont',
+    // fontFamily: 'Al-Qalam-Quran-Majeed',
   },
   item: {
     // marginVertical: 10,
@@ -156,3 +159,5 @@ export default MyFlatList;
 // https://reactnativeelements.com/docs/
 // https://react-native-elements.js.org/#/card (Live Demo)
 // https://reactnativeelements.com/docs/listitem/ (contacts with avatar)
+
+// http://quran.mursil.com/Web-Print-Publishing-Quran-Text-Graphics-Fonts-and-Downloads/fonts-optimized-for-quran
