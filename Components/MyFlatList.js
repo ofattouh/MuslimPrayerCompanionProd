@@ -111,6 +111,7 @@ const styles = StyleSheet.create({
     paddingRight: 35,
     fontFamily: '_PDMS_Saleem_QuranFont',
     // fontFamily: 'Al-Qalam-Quran-Majeed',
+    // fontFamily: 'Me-Quran-Volt-Newmet',
   },
   item: {
     // marginVertical: 10,
