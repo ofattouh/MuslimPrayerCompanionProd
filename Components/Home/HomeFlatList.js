@@ -82,8 +82,8 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   content: {
-    // paddingTop: 10,
-    // paddingBottom: 10,
+    paddingTop: 10,
+    paddingBottom: 10,
     fontSize: 35,
     paddingRight: 35,
     fontFamily: '_PDMS_Saleem_QuranFont',
@@ -91,16 +91,17 @@ const styles = StyleSheet.create({
     // fontFamily: 'Me-Quran-Volt-Newmet',
   },
   item: {
+    margin: 2,
+    width: '100%',
     // marginVertical: 10,
     // marginHorizontal: 5,
-    margin: 5,
-    height: 250,
-    width: '100%',
+    // height: 250,
   },
   separator: {
-    height: 1,
+    height: 0.5,
     backgroundColor: '#ADD8E6',
   },
+  /*
   image: {
     // width: 370,
     width: '100%',
@@ -117,7 +118,6 @@ const styles = StyleSheet.create({
     height: 50,
     width: 450,
   },
-  /*
   footer: {
     borderTopWidth: 1,
     borderColor: '#CED0CE',
