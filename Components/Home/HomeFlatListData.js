@@ -2,7 +2,6 @@ const HomeFlatListData = [
   {
     id: '1',
     content: 'الله اكبر الله اكبر',
-    // url: require('./sounds/pure.m4a'),
   },
   {
     id: '2',

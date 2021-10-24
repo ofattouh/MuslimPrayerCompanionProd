@@ -2,28 +2,18 @@ import React, {useState} from 'react';
 import {
   FlatList,
   SafeAreaView,
-  StatusBar,
   StyleSheet,
   Text,
-  TouchableOpacity,
+  TouchableHighlight,
   // ActivityIndicator,
-  Image,
+  // StatusBar,
+  // Image,
 } from 'react-native';
 
 import HomeFlatListData from './HomeFlatListData'; // saved locally
 
-const Item = ({item, onPress, backgroundColor, textColor}) => (
-  <TouchableOpacity onPress={onPress} style={[styles.item, backgroundColor]}>
-    <Text style={styles.content}>{item.content}</Text>
-  </TouchableOpacity>
-);
-
 const HomeFlatList = () => {
-  // const [selectedId, setSelectedId] = useState(null);
-
-  const renderSeparator = () => {
-    return <SafeAreaView style={styles.separator} />;
-  };
+  const [selectedId, setSelectedId] = useState(null);
 
   /* const renderHeader = () => {
     return (
@@ -43,18 +33,29 @@ const HomeFlatList = () => {
     };
   */
 
+  const renderSeparator = () => {
+    return <SafeAreaView style={styles.separator} />;
+  };
+
   // the index corresponding to this item in the data array.
   const renderItem = ({item, index, separators}) => {
-    // const backgroundColor = item.id === selectedId ? '#fff' : '#fff';
-    // const color = item.id === selectedId ? 'black' : 'black';
+    const backgroundColor = item.id === selectedId ? '#fff' : '#fff';
+    const textColor = item.id === selectedId ? '#000' : '#000';
 
     return (
-      <Item
-        item={item}
-        // backgroundColor={{backgroundColor}}
-        // textColor={{color}}
-        // onPress={() => setSelectedId(item.id)}
-      />
+      // TouchableHighlight must have one child (not zero or more than one), otherwise use View
+      <TouchableHighlight
+        key={item.id}
+        onPress={() => setSelectedId(item.id)}
+        style={styles.item}
+        underlayColor={backgroundColor} // color of underlay that will show when clicked
+        // onShowUnderlay={separators.highlight} // will update the highlighted prop
+        // onHideUnderlay={separators.unhighlight} // Called immediately after underlay is hidden
+        // activeOpacity={1} // Opacity of wrapping view when clicked: 0 to 1 (default: 0.85)
+        // ListEmptyComponent = {} // empty data list component
+      >
+        <Text style={[styles.content, {color: textColor}]}>{item.content}</Text>
+      </TouchableHighlight>
     );
   };
 
@@ -67,7 +68,7 @@ const HomeFlatList = () => {
         // ListHeaderComponent={renderHeader}
         // ListFooterComponent={renderFooter}
         // keyExtractor={item => item.id} // The default extractor checks item.key, then item.id, and then falls back to using the index
-        // extraData={selectedId} // FlatList will re-render for any state changes outside of the data prop since it is pure component
+        // extraData={selectedId} // Will cause FlatList to re-render for any state changes outside of data prop since FlatList is pure component
       />
     </SafeAreaView>
   );
@@ -78,8 +79,8 @@ const styles = StyleSheet.create({
     flex: 1,
     // marginTop: StatusBar.currentHeight || 0,
     backgroundColor: '#fff',
-    width: '97%',
-    padding: 10,
+    width: '100%',
+    padding: 5,
   },
   content: {
     paddingTop: 10,
@@ -103,7 +104,7 @@ const styles = StyleSheet.create({
   },
   /*
   image: {
-    // width: 370,
+    width: 370,
     width: '100%',
     height: 300,
   },
