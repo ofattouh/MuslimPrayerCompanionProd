@@ -5,7 +5,8 @@ import Pdf from 'react-native-pdf';
 
 function HolyQuranScreen({navigation}) {
   const source = {
-    uri: 'http://samples.leanpub.com/thereactnativebook-sample.pdf',
+    // uri: 'http://samples.leanpub.com/thereactnativebook-sample.pdf',
+    uri: 'https://d1.islamhouse.com/data/ar/ih_books/single_01/ar_Mushaf_Almadina_L.pdf',
     cache: true,
   };
 
