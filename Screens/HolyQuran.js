@@ -51,3 +51,5 @@ const styles = StyleSheet.create({
 });
 
 export default HolyQuranScreen;
+
+// https://islamhouse.com/en/books/5256/
