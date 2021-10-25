@@ -21,6 +21,7 @@ import AudioPlayerScreen from '../Screens/AudioPlayer';
 import VideoPlayerScreen from '../Screens/VideoPlayer';
 import VideoPlayer2Screen from '../Screens/VideoPlayer2';
 import VideoPlayer3Screen from '../Screens/VideoPlayer3';
+import HolyQuranScreen from '../Screens/HolyQuran';
 
 function CustomDrawerContent(props) {
   return (
@@ -65,6 +66,7 @@ function MyDrawer({navigation}) {
       <Drawer.Screen name="VideoPlayer" component={VideoPlayerScreen} />
       <Drawer.Screen name="VideoPlayer2" component={VideoPlayer2Screen} />
       <Drawer.Screen name="VideoPlayer3" component={VideoPlayer3Screen} />
+      <Drawer.Screen name="HolyQuran" component={HolyQuranScreen} />
       <Drawer.Screen name="MySlider" component={MySlider} />
     </Drawer.Navigator>
   );

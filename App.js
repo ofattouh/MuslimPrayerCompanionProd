@@ -14,6 +14,10 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {LogBox} from 'react-native';
 LogBox.ignoreLogs(['Reanimated 2']);
 
+// ToDo: Fix/ignore Require cycles are allowed, but can result in uninitialized values. Consider refactoring to remove the need for a cycle.
+// WARN  Require cycle: node_modules\rn-fetch-blob\index.js -> node_modules\rn-fetch-blob\polyfill\index.js -> node_modules\rn-fetch-blob\polyfill\Fetch.js -> node_modules\rn-fetch-blob\index.js
+LogBox.ignoreLogs(['Require cycle']);
+
 // Components
 import MyDrawer from './Components/MyDrawer';
 
@@ -39,6 +43,7 @@ export default App;
 // npx pod-install // will install all ios dependancies defined in ios/podfile
 
 // Debug (Android)
-// cd android && ./gradlew clean
+// cd Android && ./gradlew clean    // Run Android build gradle (Linux)
+// cd Android && gradlew.bat        // Run Android build gradle (Windows)
 // npx react-native start --reset-cache
 // 192.168.0.10:8081          // c:\>ipconfig
