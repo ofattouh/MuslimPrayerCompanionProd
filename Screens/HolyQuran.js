@@ -1,12 +1,13 @@
 import * as React from 'react';
-import {SafeAreaView, Dimensions, StyleSheet} from 'react-native';
+import {SafeAreaView, Dimensions, StyleSheet, Alert} from 'react-native';
 
 import Pdf from 'react-native-pdf';
 
 function HolyQuranScreen({navigation}) {
   const source = {
     // uri: 'http://samples.leanpub.com/thereactnativebook-sample.pdf',
-    uri: 'https://d1.islamhouse.com/data/ar/ih_books/single_01/ar_Mushaf_Almadina_L.pdf',
+    // uri: 'https://d1.islamhouse.com/data/ar/ih_books/single_01/ar_Mushaf_Almadina_L.pdf',
+    uri: 'https://d1.islamhouse.com/data/ar/ih_books/single_01/ar_Mushaf_Almadina.pdf',
     cache: true,
   };
 
@@ -27,6 +28,7 @@ function HolyQuranScreen({navigation}) {
           console.log(`current page: ${page}`);
         }}
         onError={error => {
+          Alert('File is not available. Try again later' + error);
           console.log(error);
         }}
         onPressLink={uri => {
