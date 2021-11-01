@@ -45,5 +45,8 @@ export default App;
 // Debug (Android)
 // cd Android && ./gradlew clean    // Run Android build gradle (Linux)
 // cd Android && gradlew.bat        // Run Android build gradle (Windows)
+// rm -rf android/app/build         // Execution failed for task ':app:compressDebugAssets
+// gradlew.bat assembleRelease      // Execution failed for task ':app:packageDebug'
+// gradlew.bat installDebug
 // npx react-native start --reset-cache
 // 192.168.0.10:8081          // c:\>ipconfig

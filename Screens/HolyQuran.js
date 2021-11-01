@@ -7,7 +7,8 @@ function HolyQuranScreen({navigation}) {
   const source = {
     // uri: 'http://samples.leanpub.com/thereactnativebook-sample.pdf',
     // uri: 'https://d1.islamhouse.com/data/ar/ih_books/single_01/ar_Mushaf_Almadina_L.pdf',
-    uri: 'https://d1.islamhouse.com/data/ar/ih_books/single_01/ar_Mushaf_Almadina.pdf',
+    // uri: 'https://d1.islamhouse.com/data/ar/ih_books/single_01/ar_Mushaf_Almadina.pdf',
+    uri: 'bundle-assets://pdf/Quran.pdf',
     cache: true,
   };
 
