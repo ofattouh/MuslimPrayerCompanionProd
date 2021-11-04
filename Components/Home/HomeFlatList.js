@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
   content: {
     paddingTop: 10,
     paddingBottom: 10,
-    fontSize: 32,
+    fontSize: 34,
     paddingRight: 35,
     fontFamily: '_PDMS_Saleem_QuranFont',
     // fontFamily: 'Al-Qalam-Quran-Majeed',
