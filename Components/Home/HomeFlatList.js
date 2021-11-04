@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
   content: {
     paddingTop: 10,
     paddingBottom: 10,
-    fontSize: 35,
+    fontSize: 32,
     paddingRight: 35,
     fontFamily: '_PDMS_Saleem_QuranFont',
     // fontFamily: 'Al-Qalam-Quran-Majeed',
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
   item: {
     margin: 2,
     width: '100%',
-    // marginVertical: 10,
+    marginVertical: 10,
     // marginHorizontal: 5,
     // height: 250,
   },

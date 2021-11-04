@@ -1,7 +1,7 @@
 const HomeFlatListData = [
   {
     id: '1',
-    content: 'الله اكبر الله اكبر',
+    content: 'الله اكبر الله اكبر الله اكبر',
   },
   {
     id: '2',
