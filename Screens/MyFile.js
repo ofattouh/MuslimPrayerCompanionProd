@@ -7,7 +7,7 @@ var RNFS = require('react-native-fs');
 function MyFileScreen({navigation}) {
   const [contents, setContent] = useState('');
 
-  // Android Only
+  // Android app's assets folder. Android Only
   RNFS.readFileAssets('myFile.txt', 'ascii')
     .then(file => {
       setContent(file);

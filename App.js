@@ -10,15 +10,11 @@ import * as React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 
-// ToDo: Fix/ignore Android react native Reanimated 2 warnings
 import {LogBox} from 'react-native';
-LogBox.ignoreLogs(['Reanimated 2']);
-LogBox.ignoreLogs(['new NativeEventEmitter']); // Ignore log notification by message
-// LogBox.ignoreAllLogs(); //Ignore all log notifications
-
-// ToDo: Fix/ignore Require cycles are allowed, but can result in uninitialized values. Consider refactoring to remove the need for a cycle.
-// WARN  Require cycle: node_modules\rn-fetch-blob\index.js -> node_modules\rn-fetch-blob\polyfill\index.js -> node_modules\rn-fetch-blob\polyfill\Fetch.js -> node_modules\rn-fetch-blob\index.js
-LogBox.ignoreLogs(['Require cycle']);
+LogBox.ignoreLogs(['Reanimated 2']); // Fix/ignore Android react native Reanimated 2 warnings
+LogBox.ignoreLogs(['new NativeEventEmitter']); //
+LogBox.ignoreLogs(['Require cycle']); // Fix/ignore Require cycles are allowed, but can result in uninitialized values
+// LogBox.ignoreAllLogs(); // ToDo: Ignore all log notifications
 
 // Components
 import MyDrawer from './Components/MyDrawer';
