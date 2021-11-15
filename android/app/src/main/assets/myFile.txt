@@ -1,0 +1,1 @@
+My test file changes only after app reboot!

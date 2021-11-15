@@ -13,6 +13,8 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 // ToDo: Fix/ignore Android react native Reanimated 2 warnings
 import {LogBox} from 'react-native';
 LogBox.ignoreLogs(['Reanimated 2']);
+LogBox.ignoreLogs(['new NativeEventEmitter']); // Ignore log notification by message
+// LogBox.ignoreAllLogs(); //Ignore all log notifications
 
 // ToDo: Fix/ignore Require cycles are allowed, but can result in uninitialized values. Consider refactoring to remove the need for a cycle.
 // WARN  Require cycle: node_modules\rn-fetch-blob\index.js -> node_modules\rn-fetch-blob\polyfill\index.js -> node_modules\rn-fetch-blob\polyfill\Fetch.js -> node_modules\rn-fetch-blob\index.js
@@ -43,8 +45,8 @@ export default App;
 // npx pod-install // will install all ios dependancies defined in ios/podfile
 
 // Debug (Android)
-// cd Android && ./gradlew clean    // Run Android build gradle (Linux)
-// cd Android && gradlew.bat        // Run Android build gradle (Windows)
+// cd Android && ./gradlew clean    // Run Android build gradle (Linux). Build dependencies manually
+// cd Android && gradlew.bat        // Run Android build gradle (Windows). No react native linking
 // rm -rf android/app/build         // Execution failed for task ':app:compressDebugAssets
 // gradlew.bat assembleRelease      // Execution failed for task ':app:packageDebug'
 // gradlew.bat installDebug
