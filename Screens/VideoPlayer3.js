@@ -14,6 +14,7 @@ function VideoPlayer3Screen({navigation}) {
         tapAnywhereToPause={true}
         onBack={() => navigation.goBack()}
         onError={() => alert('Error! video is not available')}
+        audioOnly={true}
         // source={require('path/to/file')}
         // onBack={() => navigation.navigate('Details', {owner: 'My Drawer'})}
         // videoStyle={styles.style}
