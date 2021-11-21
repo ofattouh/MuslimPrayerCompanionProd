@@ -7,7 +7,8 @@ function VideoPlayer3Screen({navigation}) {
     <SafeAreaView style={styles.container}>
       <VideoPlayer
         source={{
-          uri: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+          // uri: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+          uri: 'http://stream.radiojar.com/8s5u5tpdtwzuv',
         }}
         paused={true}
         tapAnywhereToPause={true}

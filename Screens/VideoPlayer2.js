@@ -5,21 +5,24 @@ import VideoPlayer from 'react-native-video-player';
 function VideoPlayer2Screen({navigation}) {
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.paragraph}>Video player has limited features</Text>
+      <Text style={styles.paragraph}>
+        اذاعة القران الكريم من القاهرة بث مباشر
+      </Text>
       <VideoPlayer
         video={{
-          uri: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+          uri: 'http://stream.radiojar.com/8s5u5tpdtwzuv',
         }}
         videoWidth={1600}
         videoHeight={1200}
         resizeMode={'cover'} // default: contain
         pauseOnPress={true}
         thumbnail={{
-          uri: 'https://picsum.photos/500/500.jpg?random=' + Math.random(),
+          uri: 'https://4.bp.blogspot.com/-0NoeumnmElw/W2hKEB6GHOI/AAAAAAAALGE/fUDn0tXtP6ILxEIzGkJDMSIApC4gpWPDgCLcBGAs/s400/holy-quran-radio-station-cairo-live.jpg',
         }}
         endThumbnail={{
           uri: 'https://picsum.photos/500/500.jpg?random=' + Math.random(),
         }}
+        audioOnly={true}
         // autoplay={true}
         // loop
         // duration={} // fallback

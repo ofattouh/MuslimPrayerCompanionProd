@@ -20,7 +20,7 @@ export default class VideoPlayerScreen extends Component {
     currentTime: 0.0, // beginning
     paused: true, // default false, Don't auto-play
     repeat: false, // default false
-    audioOnly: false, // default false, if true, poster prop must be set to play the audio
+    // audioOnly: true, // default false, if true, poster prop must be set to play the audio
   };
 
   video: Video;
@@ -179,15 +179,14 @@ export default class VideoPlayerScreen extends Component {
               <TouchableOpacity
                 onPress={() =>
                   this.setState({audioOnly: !this.state.audioOnly})
-                }
-                >
+                }>
                 {this.state.audioOnly ? (
                   <Icon name="audio-video-off" size={30} color="#fff" />
                 ) : (
                   <Icon name="audio-video" size={30} color="#fff" />
                 )}
               </TouchableOpacity>
-                */}
+              */}
             </View>
           </View>
 
@@ -258,7 +257,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     borderRadius: 5,
     position: 'absolute',
-    top: 650,
+    top: 600,
     left: 20,
     right: 20,
   },
