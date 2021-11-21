@@ -23,6 +23,7 @@ function VideoPlayer2Screen({navigation}) {
           uri: 'https://picsum.photos/500/500.jpg?random=' + Math.random(),
         }}
         audioOnly={true}
+        playInBackground={true}
         // autoplay={true}
         // loop
         // duration={} // fallback
