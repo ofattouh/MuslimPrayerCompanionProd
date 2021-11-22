@@ -18,8 +18,8 @@ const pathDir = RNFS.DocumentDirectoryPath;
 function readMyDir() {
   RNFS.readDir(pathDir)
     .then(result => {
-      console.log('\nDir Path: ', pathDir);
-      console.log('\nDir contents: ', result);
+      // console.log('\nDir Path: ', pathDir);
+      // console.log('\nDir contents: ', result);
 
       // stat the second file only (skip first file: ReactNativeDevBundle.js)
       return Promise.all([RNFS.stat(result[1].path), result[1].path]);
@@ -27,7 +27,7 @@ function readMyDir() {
     .then(statResult => {
       // if we have a file, read it
       if (statResult[0].isFile()) {
-        console.log('\nSecond File: ', statResult);
+        // console.log('\nSecond File: ', statResult);
         return RNFS.readFile(statResult[1], 'utf8');
       }
 
@@ -35,7 +35,6 @@ function readMyDir() {
     })
     .then(contents => {
       Alert.alert('Contents of second File in dir:\n' + contents);
-      console.log(contents);
     })
     .catch(err => {
       Alert.alert(err.message);
@@ -51,8 +50,19 @@ function writeMyFile() {
 
   RNFS.writeFile(path, 'Lorem ipsum, Lorem ipsum ...', 'utf8')
     .then(success => {
-      console.log(path);
-      Alert.alert('File is successfully written!');
+      Alert.alert('File: ' + myFile + ' is successfully written!');
+    })
+    .catch(err => {
+      console.log(err.message);
+    });
+}
+
+function appendMyFile() {
+  var path = pathDir + '/' + myFile;
+
+  RNFS.appendFile(path, ', appended text ...', 'utf8')
+    .then(success => {
+      Alert.alert('File: ' + myFile + ' is successfully appended!');
     })
     .catch(err => {
       console.log(err.message);
@@ -62,12 +72,12 @@ function writeMyFile() {
 function readMyFile() {
   var path = pathDir + '/' + myFile;
 
-  RNFS.readFile(path, 'utf8')
+  RNFS.readFile(path, 'utf8') // utf8 (default), ascii, base64 (binary files)
     .then(contents => {
       Alert.alert(contents);
     })
     .catch(err => {
-      Alert.alert('Error reading ' + myFile);
+      Alert.alert('Error reading File: ' + myFile);
       console.log(err.message);
     });
 }
@@ -77,11 +87,11 @@ function deleteMyFile() {
 
   RNFS.unlink(path)
     .then(() => {
-      Alert.alert(myFile + ' is deleted!');
+      Alert.alert(myFile + ' is successfully deleted!');
     })
-    // `unlink` will throw an error, if the item to unlink does not exist
+    // `unlink` will throw an error, if the file/dir to unlink does not exist
     .catch(err => {
-      Alert.alert(myFile + ' ' + err.message);
+      Alert.alert('Error! ' + myFile + ' ' + err.message);
       console.log(err.message);
     });
 }
@@ -89,7 +99,7 @@ function deleteMyFile() {
 function MyFileScreen({navigation}) {
   const [contents, setContent] = useState('');
 
-  // Android app's assets folder. Android Only
+  // Reads the file at path in the Android app's assets folder
   RNFS.readFileAssets(myAssetsFile, 'ascii')
     .then(file => {
       setContent(file);
@@ -107,7 +117,11 @@ function MyFileScreen({navigation}) {
       </Text>
 
       <TouchableWithoutFeedback onPress={() => writeMyFile()}>
-        <Text style={styles.paragraph}>Click to write To File</Text>
+        <Text style={styles.paragraph}>Click to write To My File</Text>
+      </TouchableWithoutFeedback>
+
+      <TouchableWithoutFeedback onPress={() => appendMyFile()}>
+        <Text style={styles.paragraph}>Click to append To My File</Text>
       </TouchableWithoutFeedback>
 
       <TouchableWithoutFeedback onPress={() => readMyFile()}>
@@ -138,3 +152,8 @@ const styles = StyleSheet.create({
 });
 
 export default MyFileScreen;
+
+// https://github.com/cjdell/react-native-fs-test/blob/master/index.common.js
+// https://dev-yakuza.posstree.com/en/react-native/react-native-fs/
+// https://reactnative.dev/docs/permissionsandroid
+// https://requestbin.com  // useful for testing files uploads/downloads

@@ -28,6 +28,12 @@ import playlistData from '../Components/AudioPlayer/data/playlist.json'; // stre
 
 const setup = async () => {
   try {
+    // if app was relaunched and music was already playing, we don't setup again.
+    const currentTrack = await TrackPlayer.getCurrentTrack();
+    if (currentTrack !== null) {
+      return;
+    }
+
     // make sure everything is initialized
     await TrackPlayer.setupPlayer({waitForBuffer: true});
 
@@ -59,7 +65,6 @@ const setup = async () => {
         icon: require('./notification-icon.png') */
     });
   } catch (e) {
-    // Alert.alert(e);
     console.log(e);
   }
 
@@ -78,9 +83,9 @@ const togglePlayback = async (playbackState: State) => {
   // LOG  {"0": "None", "1": "Stopped", "2": "Paused", "3": "Playing", "6": "Buffering", "8": "Connecting", "Buffering": 6, "Connecting": 8, "None": 0, "Paused": 2, "Playing": 3, "Ready": 2, "Stopped": 1}
 
   if (currentTrack == null) {
-    Alert.alert('No track to play!' + currentTrack);
-
-    // TODO: Perhaps present an error or restart the playlist?
+    // TODO: Present an error, restart the playlist, and call setup again?
+    Alert.alert('No track to play. Restarting playlist! ' + currentTrack);
+    setup();
   } else {
     if (
       playbackState === State.Ready ||
@@ -332,6 +337,7 @@ const styles = StyleSheet.create({
 
 export default AudioPlayerScreen;
 
+// https://github.com/DoubleSymmetry/react-native-track-player/blob/main/example/App.tsx
 // https://react-native-track-player.js.org/getting-started/
 // https://github.com/DoubleSymmetry/react-native-track-player
 // https://react-native-track-player.js.org/documentation/

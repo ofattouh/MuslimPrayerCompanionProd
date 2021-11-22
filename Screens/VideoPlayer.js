@@ -20,7 +20,7 @@ export default class VideoPlayerScreen extends Component {
     currentTime: 0.0, // beginning
     paused: true, // default false, Don't auto-play
     repeat: false, // default false
-    // audioOnly: true, // default false, if true, poster prop must be set to play the audio
+    audioOnly: true, // default false, if true, poster prop must be set to play the audio
   };
 
   video: Video;
@@ -61,7 +61,7 @@ export default class VideoPlayerScreen extends Component {
   };
 
   onError = () => {
-    Alert.alert('Error playing video! Try again later');
+    Alert.alert('Error playing media file! Try again later');
   };
 
   togglePlay = () => {
@@ -94,7 +94,8 @@ export default class VideoPlayerScreen extends Component {
             /* For ExoPlayer Android */
             // source={{ uri: 'http://www.youtube.com/api/manifest/dash/id/bf5bb2419360daf1/source/youtube?as=fmp4_audio_clear,fmp4_sd_hd_clear&sparams=ip,ipbits,expire,source,id,as&ip=0.0.0.0&ipbits=0&expire=19000000000&signature=51AF5F39AB0CEC3E5497CD9C900EBFEAECCCB5C7.8506521BFC350652163895D4C26DEE124209AA9E&key=ik0', type: 'mpd' }}
             // source={require('../Components/VideoPlayer/resources/my-video.mp4')} // local
-            source={{uri: 'https://vjs.zencdn.net/v/oceans.mp4'}} // network
+            // source={{uri: 'https://vjs.zencdn.net/v/oceans.mp4'}} // network
+            source={{uri: 'http://stream.radiojar.com/8s5u5tpdtwzuv'}} // Quran radio
             rate={this.state.rate}
             paused={this.state.paused}
             volume={this.state.volume}
