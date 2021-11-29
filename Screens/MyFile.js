@@ -19,13 +19,13 @@ function readMyDir() {
   RNFS.readDir(pathDir)
     .then(result => {
       // console.log('\nDir Path: ', pathDir);
-      console.log('\nDir contents: ', result);
+      // console.log('\nDir contents: ', result);
 
       // stat the second file only (skip first file: ReactNativeDevBundle.js)
       return Promise.all([RNFS.stat(result[1].path), result[1].path]);
     })
     .then(statResult => {
-      console.log('\nstatResult: ', statResult);
+      // console.log('\nstatResult: ', statResult);
 
       // if we have a file, read it
       if (statResult[0].isFile()) {
