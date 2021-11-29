@@ -19,15 +19,16 @@ function readMyDir() {
   RNFS.readDir(pathDir)
     .then(result => {
       // console.log('\nDir Path: ', pathDir);
-      // console.log('\nDir contents: ', result);
+      console.log('\nDir contents: ', result);
 
       // stat the second file only (skip first file: ReactNativeDevBundle.js)
       return Promise.all([RNFS.stat(result[1].path), result[1].path]);
     })
     .then(statResult => {
+      console.log('\nstatResult: ', statResult);
+
       // if we have a file, read it
       if (statResult[0].isFile()) {
-        // console.log('\nSecond File: ', statResult);
         return RNFS.readFile(statResult[1], 'utf8');
       }
 
@@ -37,8 +38,8 @@ function readMyDir() {
       Alert.alert('Contents of second File in dir:\n' + contents);
     })
     .catch(err => {
-      Alert.alert(err.message);
-      console.log(err.message, err.code);
+      Alert.alert('Error reading first directory file at: ' + pathDir);
+      console.log(err);
     });
 }
 
@@ -91,7 +92,7 @@ function deleteMyFile() {
     })
     // `unlink` will throw an error, if the file/dir to unlink does not exist
     .catch(err => {
-      Alert.alert('Error! ' + myFile + ' ' + err.message);
+      Alert.alert('Error deleting ' + myFile + '! ' + err.message);
       console.log(err.message);
     });
 }
@@ -99,7 +100,7 @@ function deleteMyFile() {
 function MyFileScreen({navigation}) {
   const [contents, setContent] = useState('');
 
-  // Reads the file at path in the Android app's assets folder
+  // Reads the file relative to the root of assets folder (Android only)
   RNFS.readFileAssets(myAssetsFile, 'ascii')
     .then(file => {
       setContent(file);
@@ -112,7 +113,7 @@ function MyFileScreen({navigation}) {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.paragraph}>
-        {'Android Assets File:\n'}
+        {'Android assets file: '} {myAssetsFile} {' contents:\n'}
         {contents}
       </Text>
 
